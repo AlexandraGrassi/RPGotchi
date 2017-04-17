@@ -1,0 +1,12 @@
+.new-game-main {
+    -fx-background-color: #34495e;
+}
+
+.start-game-btn {
+    -fx-background-color: #b030ff;
+    -fx-background-radius: 10px;
+}
+
+.start-game-btn:hover {
+    -fx-background-color: rgb(165, 46, 241);
+}

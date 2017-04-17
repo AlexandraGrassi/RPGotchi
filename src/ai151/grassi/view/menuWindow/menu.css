@@ -1,0 +1,31 @@
+.main {
+    -fx-background-image: url("../images/menu_background.png");
+    -fx-background-position: center center;
+}
+
+.play-btn {
+    -fx-background-color: #ff8d25;
+    -fx-background-radius: 10px;
+}
+
+.play-btn:hover {
+    -fx-background-color: #f18423;
+}
+
+.about-game-btn {
+    -fx-background-color: #b030ff;
+    -fx-background-radius: 10px;
+}
+
+.about-game-btn:hover {
+    -fx-background-color: rgb(165, 46, 241);
+}
+
+.exit-btn {
+    -fx-background-color: #ffd00f;
+    -fx-background-radius: 10px;
+}
+
+.exit-btn:hover {
+    -fx-background-color: rgb(241, 195, 15);
+}

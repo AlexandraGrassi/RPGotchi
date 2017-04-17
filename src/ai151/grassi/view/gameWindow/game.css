@@ -1,0 +1,81 @@
+.game-main {
+    -fx-background-color: #34495e;
+}
+
+.fight {
+    -fx-background-color: #37ff8f;
+}
+
+.gotchi {
+    -fx-background-image: url("../images/jigglypuff.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+}
+
+.food-btn {
+    -fx-border-radius: 100%;
+    -fx-background-radius: 100%;
+    -fx-background-color: #db80ff;
+    -fx-background-image: url("../images/food.png");
+}
+
+.food-btn:hover {
+    -fx-background-color: #b16bd5;
+}
+
+.sleep-btn {
+    -fx-border-radius: 100%;
+    -fx-background-radius: 100%;
+    -fx-background-color: #ff5443;
+    -fx-background-image: url("../images/sleep.png");
+        -fx-background-repeat: no-repeat;
+        -fx-background-position: center center;
+}
+
+.sleep-btn:hover {
+    -fx-background-color: #d64839;
+}
+
+.health-btn {
+    -fx-border-radius: 100%;
+    -fx-background-radius: 100%;
+    -fx-background-color: #3bff8c;
+    -fx-background-image: url("../images/health.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+}
+
+.health-btn:hover {
+    -fx-background-color: #36d672;
+}
+
+.shower-btn {
+    -fx-border-radius: 100%;
+    -fx-background-radius: 100%;
+    -fx-background-color: #ffd012;
+    -fx-background-image: url("../images/shower.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: top center;
+}
+
+.shower-btn:hover {
+    -fx-background-color: #d5a912;
+}
+
+.smile-btn {
+    -fx-border-radius: 100%;
+    -fx-background-radius: 100%;
+    -fx-background-color: #ff6200;
+    -fx-background-image: url("../images/smile.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+}
+
+.smile-btn:hover {
+    -fx-background-color: #d55000;
+}
+
+.info {
+    -fx-background-color: #1aba9a;
+    -fx-text-fill: white;
+}

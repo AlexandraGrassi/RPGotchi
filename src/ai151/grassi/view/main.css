@@ -1,0 +1,10 @@
+.back-btn {
+    -fx-background-image: url("images/back-btn.png");
+    -fx-background-position: center center;
+    -fx-background-color: #34495e;
+    -fx-border-width: 0;
+}
+
+.color {
+    -fx-background-color: #34495e;
+}

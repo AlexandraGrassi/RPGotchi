@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import ai151.grassi.controller.MenuController?>
+
+<VBox fx:id="rootPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="main" stylesheets="@menu.css" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ai151.grassi.controller.MenuController">
+   <children>
+      <Button maxHeight="50.0" maxWidth="155.0" minHeight="50.0" minWidth="155.0" mnemonicParsing="false" onAction="#loadGame" prefHeight="50.0" prefWidth="155.0" styleClass="play-btn" text="Играть" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="24.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="14.0" />
+         </VBox.margin></Button>
+      <Button onAction="#readRules" maxHeight="50.0" maxWidth="155.0" minHeight="50.0" minWidth="155.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="155.0" styleClass="about-game-btn" text="О игре" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="14.0" />
+         </VBox.margin></Button>
+      <Button fx:id="exitButton" maxHeight="50.0" maxWidth="155.0" minHeight="50.0" minWidth="155.0" mnemonicParsing="false" onAction="#exitGame" prefHeight="50.0" prefWidth="155.0" styleClass="exit-btn" text="Выход" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="24.0" />
+         </font></Button>
+   </children>
+</VBox>
