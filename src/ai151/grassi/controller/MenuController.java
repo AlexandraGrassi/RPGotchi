@@ -24,8 +24,8 @@ public class MenuController implements Initializable {
     }
 
     public void loadGame(ActionEvent actionEvent) throws Exception {
-        //VBox pane = FXMLLoader.load(getClass().getResource("../view/newGameWindow/newGame.fxml"));
-        HBox pane = FXMLLoader.load(getClass().getResource("../view/gameWindow/game.fxml"));
+        VBox pane = FXMLLoader.load(getClass().getResource("../view/newGameWindow/newGame.fxml"));
+        //HBox pane = FXMLLoader.load(getClass().getResource("../view/gameWindow/game.fxml"));
         rootPane.getChildren().setAll(pane);
     }
 

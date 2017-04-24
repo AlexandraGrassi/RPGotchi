@@ -8,3 +8,8 @@
 .color {
     -fx-background-color: #34495e;
 }
+
+.background {
+    -fx-background-image: url("../view/images/menu_background.png");
+    -fx-background-position: center center;
+}

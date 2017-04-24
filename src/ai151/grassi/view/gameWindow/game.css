@@ -8,6 +8,7 @@
 
 .gotchi {
     -fx-background-image: url("../images/jigglypuff.png");
+    -fx-background-size: 125 125;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center center;
 }
