@@ -1,45 +1,40 @@
-/*
 package ai151.grassi.model;
-
-import java.util.List;
-
-*/
-/**
- * Created by AGrassi on 11.04.2017.
- *//*
 
 public class LivingEngine {
 
     // Синглтон
+    private Gotchi myGotchi;
 
-    private List<Gotchi> gotchi;
-    public LivingEngine() {
-        new LivingThread().run();
-    }
-
-    public void addGotchi() {
-
+    public void addGotchi(Gotchi gotchi) {
+        myGotchi = gotchi;
     }
 
     public void deleteGotchi() {
-        //St
+        myGotchi = null;
+    }
+
+    public LivingEngine() {
+        LivingThread lv = new LivingThread();
+        lv.start();
     }
 
     class LivingThread extends Thread {
-
+        @Override
         public void run() {
-           */
-/* for (Gotchi g : gotchi) {
-                g.decreaseEnergy(10, 20);
-            }*//*
-
-
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            while (true) {
+                if (myGotchi != null) {
+                    try {
+                        // TODO - добавить потоки для понижения каждой потребности в разное время
+                        Thread.sleep(20000);
+                        myGotchi.unSleep();
+                        myGotchi.unEat();
+                        myGotchi.unHappy();
+                        myGotchi.unWash();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
     }
 }
-*/

@@ -1,7 +1,7 @@
 package ai151.grassi.controller;
 
 import ai151.grassi.model.Gotchi;
-import ai151.grassi.model.Observer;
+import ai151.grassi.model.LivingEngine;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,7 +14,7 @@ import javafx.scene.layout.HBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class GameController implements Initializable, Observer {
+public class GameController implements Initializable {
     @FXML
     private HBox gameWindow;
     @FXML
@@ -26,12 +26,33 @@ public class GameController implements Initializable, Observer {
 
     // готчи созданный по умолчанию
     private Gotchi myGotchi;
+    private LivingEngine game;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        game = new LivingEngine();
         myGotchi = new Gotchi("Meow", 10, 10, 10);
-        myGotchi.registerObserver(this);
+
         nameLabel.setText(myGotchi.getName());
+        energyLabel.
+                textProperty().bind(myGotchi.getEnergyProperty().asString().concat(" %"));
+        foodLabel.
+                textProperty().bind(myGotchi.getFoodProperty().asString().concat(" %"));
+        healthLabel.
+                textProperty().bind(myGotchi.getHealthProperty().asString().concat(" %"));
+        moodLabel.
+                textProperty().bind(myGotchi.getMoodProperty().asString().concat(" %"));
+        cleanLabel.
+                textProperty().bind(myGotchi.getCleanProperty().asString().concat(" %"));
+
+        levelLabel.textProperty().bind(myGotchi.getLevelProperty().asString());
+        experienceLabel.textProperty().bind(myGotchi.getExperienceProperty().asString());
+        staminaLabel.textProperty().bind(myGotchi.getStaminaProperty().asString());
+        agilityLabel.textProperty().bind(myGotchi.getAgilityProperty().asString());
+        strengthLabel.textProperty().bind(myGotchi.getStrengthProperty().asString());
+
+        game.addGotchi(myGotchi);
+
     }
 
     public void sleep(ActionEvent actionEvent) {
@@ -53,41 +74,14 @@ public class GameController implements Initializable, Observer {
     public void goBackToMenu(ActionEvent actionEvent) throws Exception{
         VBox pane = FXMLLoader.load(getClass().getResource("../view/menuWindow/menu.fxml"));
         gameWindow.getChildren().setAll(pane);
+        game.deleteGotchi();
     }
 
     public void fight(ActionEvent actionEvent) throws Exception{
         VBox pane = FXMLLoader.load(getClass().getResource("../view/fightWindow/fight.fxml"));
         gameWindow.getChildren().setAll(pane);
+        game.deleteGotchi();
     }
 
-    @Override
-    public void updateMainInfo(int level, int experience) {
-        levelLabel.setText("" + level);
-        experienceLabel.setText("" + experience);
-    }
-
-    @Override
-    public void updateEnergy(int energy) { energyLabel.setText(energy + "%"); }
-
-    @Override
-    public void updateFood(int food) {
-        foodLabel.setText(food + "%");
-    }
-
-    @Override
-    public void updateHealth(int health) { healthLabel.setText(health + "%"); }
-
-    @Override
-    public void updateMood(int mood) { moodLabel.setText(mood + "%");}
-
-    @Override
-    public void updateClean(int clean) { cleanLabel.setText(clean + "%");}
-
-    @Override
-    public void updateFightAbilities(int stamina, int agility, int strength) {
-        staminaLabel.setText(stamina + "");
-        agilityLabel.setText(agility + "");
-        strengthLabel.setText(strength + "");
-    }
-
+    // TODO сделать так, чтобы потребности не уменьшались, когда находишься вне основного окна
 }

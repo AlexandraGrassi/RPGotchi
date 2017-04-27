@@ -1,43 +1,35 @@
 package ai151.grassi.model;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableIntegerValue;
-import javafx.beans.value.ObservableStringValue;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
 
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Created by AGrassi on 11.04.2017.
  */
-public class Gotchi implements Observable {
+public class Gotchi {
     private final int MAX_VALUE = 100;
     private final int MIN_VALUE = 0;
     private final int MAX_LEVEL = 10;
     private final int MIN_LEVEL = 1;
 
-    private ObservableIntegerValue level;
-    private ObservableIntegerValue experience;
-    private ObservableStringValue name;
+    private SimpleIntegerProperty level;
+    private SimpleIntegerProperty experience;
+    private String name;
 
-    private ObservableIntegerValue stamina, agility, strength; //выносливость, ловкость, сила
-    private ObservableIntegerValue energy, food, health, mood, clean; // энергия, здоровье, настроение, чистота, сытость
-
-    private List<Observer> observers; // наблюдатель
+    private SimpleIntegerProperty stamina, agility, strength; //выносливость, ловкость, сила
+    private SimpleIntegerProperty energy, food, health, mood, clean; // энергия, здоровье, настроение, чистота, сытость
 
     public Gotchi(String name, int stamina, int agility, int strength) {
-        observers = new LinkedList<>();
-
-        this.name = new SimpleStringProperty(name);
+        this.name = name;
         this.level = new SimpleIntegerProperty(MIN_LEVEL);
         this.experience = new SimpleIntegerProperty(MIN_VALUE);
 
-        this.energy = new SimpleIntegerProperty(MIN_VALUE);
-        this.food = new SimpleIntegerProperty(MIN_VALUE);
-        this.health = new SimpleIntegerProperty(MIN_VALUE);
-        this.mood = new SimpleIntegerProperty(MIN_VALUE);
-        this.clean = new SimpleIntegerProperty(MIN_VALUE);
+        this.energy = new SimpleIntegerProperty(MAX_VALUE);
+        this.food = new SimpleIntegerProperty(MAX_VALUE);
+        this.health = new SimpleIntegerProperty(MAX_VALUE);
+        this.mood = new SimpleIntegerProperty(MAX_VALUE);
+        this.clean = new SimpleIntegerProperty(MAX_VALUE);
 
         this.stamina = new SimpleIntegerProperty(stamina);
         this.agility = new SimpleIntegerProperty(agility);
@@ -45,130 +37,165 @@ public class Gotchi implements Observable {
     }
 
     public String getName() {
-        return name.get();
+        return name;
     }
-    public int getLevel() {
-        return level.intValue();
-    }
-    public int getExperience() { return experience.intValue(); }
+    public SimpleIntegerProperty getLevelProperty() { return this.level; }
+    public SimpleIntegerProperty getExperienceProperty() { return this.experience; }
 
-    public int getEnergy() { return energy.intValue(); }
-    public int getFood() {
-        return food.intValue();
+    public SimpleIntegerProperty getEnergyProperty() {
+        return this.energy;
     }
-    public int getHealth() {
-        return health.intValue();
-    }
-    public int getMood() {
-        return mood.intValue();
-    }
-    public int getClean() {
-        return clean.intValue();
-    }
+    public SimpleIntegerProperty getFoodProperty() { return this.food; }
+    public SimpleIntegerProperty getHealthProperty() { return this.health; }
+    public SimpleIntegerProperty getMoodProperty() { return this.mood; }
+    public SimpleIntegerProperty getCleanProperty() { return this.clean; }
 
-    public int getStamina() {
-        return stamina.intValue();
-    }
-    public int getAgility() {
-        return agility.intValue();
-    }
-    public int getStrength() {
-        return strength.intValue();
-    }
+    public SimpleIntegerProperty getStaminaProperty() { return this.stamina; }
+    public SimpleIntegerProperty getAgilityProperty() { return this.agility; }
+    public SimpleIntegerProperty getStrengthProperty() { return this.strength; }
 
-    @Override
-    public void registerObserver(Observer o) {
-        observers.add(o);
-        notifyObservers();
-    }
+    public int getLevel() { return getLevelProperty().intValue(); }
+    public int getExperience() { return getExperienceProperty().intValue(); }
 
-    @Override
-    public void removeObserver(Observer o) {
-        observers.remove(o);
-    }
+    public int getEnergy() { return getEnergyProperty().intValue(); }
+    public int getFood() { return getFoodProperty().intValue(); }
+    public int getHealth() { return getHealthProperty().intValue(); }
+    public int getMood() { return getMoodProperty().intValue(); }
+    public int getClean () { return getCleanProperty().intValue(); }
 
-    @Override
-    public void notifyObservers() {
-        for (Observer observer : observers) {
-            observer.updateMainInfo(getLevel(), getExperience());
+    public void setEnergy(int energy) { this.energy.set(energy); }
+    public void setFood(int food) { this.food.set(food); }
+    public void setHealth(int health) { this.health.set(health); }
+    public void setMood(int mood) { this.mood.set(mood); }
+    public void setClean(int clean) { this.clean.set(clean); }
 
-            observer.updateEnergy(getEnergy());
-            observer.updateFood(getFood());
-            observer.updateHealth(getHealth());
-            observer.updateMood(getMood());
-            observer.updateClean(getClean());
-
-            observer.updateFightAbilities(getStamina(), getAgility(), getStrength());
-        }
-    }
-
-   protected int increase(int min, int max, int value) {
-        int range = max - min;
-        int result = value;
-        /*value =  new SimpleIntegerProperty(value.intValue() + (int) ((Math.random() * range) + min));*/
-        result +=  (Math.random() * range) + min;
-        return result;
-    }
+    public void setLevel(int level) { this.level.set(level); }
+    public void setExperience(int experience) { this.experience.set(experience); }
+    public void setStamina(int stamina) { this.stamina.set(stamina); }
+    public void setAgility(int agility) { this.agility.set(agility); }
+    public void setStrength(int strength) { this.strength.set(strength); }
 
     public void sleep () {
         if (getEnergy() == MAX_VALUE) {
             System.out.println("-Не хочу спать-");
         }
-        energy = new SimpleIntegerProperty( increase(5, 20, getEnergy() ) );
+        setEnergy(getEnergy() + 7);
         if (getEnergy() > MAX_VALUE) {
-            energy = new SimpleIntegerProperty(getEnergy() - (getEnergy()%100));
+            setEnergy(getEnergy() - (getEnergy() % 100));
         }
-        notifyObservers();
+    }
+
+    public void unSleep () {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                if (getEnergy() == MIN_VALUE) {
+                    System.out.println("-Я в коме-");
+                }
+                setEnergy(getEnergy() - 10);
+                if (getEnergy() < MIN_VALUE) {
+                    setEnergy(getEnergy() - (getEnergy() % 100));
+                }
+            }
+        });
     }
 
     public void eat() {
         if (getFood() == MAX_VALUE) {
             System.out.println("-Не хочу есть-");
         }
-        food = new SimpleIntegerProperty( increase(5, 15, getFood() ) );
+        setFood(getFood() + 6);
         if (getFood() > MAX_VALUE) {
-            food = new SimpleIntegerProperty(getFood() - (getFood() % 100));
+            setFood(getFood() - (getFood() % 100) );
         }
-        notifyObservers();
+    }
+
+    public void unEat () {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                if (getFood() == MIN_VALUE) {
+                    System.out.println("-Я умер-");
+                }
+                setFood(getFood() - 5);
+                if (getFood() < MIN_VALUE) {
+                    setFood(getFood() - (getFood() % 100));
+                }
+            }
+        });
     }
 
     public void treat() {
         if (getHealth() == MAX_VALUE) {
             System.out.println("-Не хочу лечиться-");
         }
-        health = new SimpleIntegerProperty( increase(5, 10, getHealth() ) );
+        setHealth(getHealth() + 8);
         if (getHealth() > MAX_VALUE) {
-            health = new SimpleIntegerProperty(getHealth() - (getHealth() % 100));
+            setHealth(getHealth() - (getHealth() % 100) );
         }
-        notifyObservers();
     }
 
+    /*public void unTreat () {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                if (getHealth() == MIN_VALUE) {
+                    System.out.println("-Я умер-");
+                }
+                setEnergy(getHealth() - 5);
+                if (getFood() < MIN_VALUE) {
+                    setHealth(getHealth() - (getHealth() % 100));
+                }
+            }
+        });
+    }*/
+
     public void makeHappy() {
-        mood = new SimpleIntegerProperty( increase(1, 2, getMood() ) );
-        if (getMood() > MAX_VALUE) {
-            health = new SimpleIntegerProperty(getMood() - (getMood() % 100));
+        if (getMood() != MAX_VALUE) {
+            setMood(getMood() + 2);
         }
-        notifyObservers();
+        if (getMood() > MAX_VALUE) {
+            setHealth(getHealth() - (getHealth() % 100));
+        }
+    }
+
+    public void unHappy() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                if (getMood() == MIN_VALUE) {
+                    System.out.println("-Я не счастлив-");
+                }
+                setMood(getMood() - 1);
+                if (getMood() < MIN_VALUE) {
+                    setMood(getMood() - (getMood() % 100));
+                }
+            }
+        });
     }
 
     public void wash() {
         if (getClean() == MAX_VALUE) {
             System.out.println("-Не хочу купаться-");
         }
-        clean = new SimpleIntegerProperty( increase(5, 20, getClean() ) );
+        setClean(getClean() + 4);
         if (getClean() > MAX_VALUE) {
-            clean = new SimpleIntegerProperty(getClean() - (getClean() % 100));
+            setClean(getClean() - (getClean() % 100));
         }
-        notifyObservers();
+    }
+
+    public void unWash() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                if (getClean() == MIN_VALUE) {
+                    System.out.println("-Я очень болен-");
+                }
+                setClean(getClean() - 5);
+                if (getClean() < MIN_VALUE) {
+                    setClean(getClean() - (getClean() % 100));
+                }
+            }
+        });
     }
 }
-
-
-
-
-/* protected void decreaseEnergy(int min, int max) {
-        int range = max - min;
-        this.energy -= (int) (Math.random() * range) + min;
-}*/
-
-

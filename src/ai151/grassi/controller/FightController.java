@@ -10,9 +10,7 @@ import javafx.scene.layout.HBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-/**
- * Created by AGrassi on 21.03.2017.
- */
+// TODO сверстать окно битвы  и начать заниматься логикой битвы
 public class FightController implements Initializable {
     @FXML
     private VBox fightWindow;
