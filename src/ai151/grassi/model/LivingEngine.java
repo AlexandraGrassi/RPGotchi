@@ -25,7 +25,7 @@ public class LivingEngine {
                 if (myGotchi != null) {
                     try {
                         // TODO - добавить потоки для понижения каждой потребности в разное время
-                        Thread.sleep(20000);
+                        Thread.sleep(5000);
                         myGotchi.unSleep();
                         myGotchi.unEat();
                         myGotchi.unHappy();

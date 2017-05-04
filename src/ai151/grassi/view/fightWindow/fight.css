@@ -1,0 +1,42 @@
+.attack1 {
+    -fx-background-color: #ffd012;
+}
+
+.attack1:hover {
+    -fx-background-color: #d5a912;
+}
+
+.attack2 {
+    -fx-background-color: #db80ff;
+}
+
+.attack2:hover {
+    -fx-background-color: #b16bd5;
+}
+
+.attack3 {
+    -fx-background-color: #ff6200;
+}
+
+.attack3:hover {
+    -fx-background-color: #d55000;
+}
+
+.gotchi-fight {
+    -fx-background-image: url("../images/jigglypuff.png");
+    -fx-background-size: 150 150;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center top;
+}
+
+.monster {
+    -fx-background-image: url("../images/kakaha.png");
+    -fx-background-size: 180 160;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center top;
+}
+
+.progress-bar .bar {
+    -fx-background-insets: 2;
+    -fx-background-color: #2edd7b;
+}
