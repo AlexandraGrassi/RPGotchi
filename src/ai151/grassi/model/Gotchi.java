@@ -1,20 +1,13 @@
 package ai151.grassi.model;
+import static ai151.grassi.model.GameConstants.*;
 
 import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
 
-
-/**
- * Created by AGrassi on 11.04.2017.
- */
 public class Gotchi {
-    private final int MAX_VALUE = 100;
-    private final int MIN_VALUE = 0;
-    private final int MAX_LEVEL = 10;
-    private final int MIN_LEVEL = 1;
 
     private SimpleIntegerProperty level;
-    private SimpleIntegerProperty experience;
+    private SimpleIntegerProperty exp;
     private String name;
 
     private SimpleIntegerProperty stamina, agility, strength; //выносливость, ловкость, сила
@@ -23,7 +16,7 @@ public class Gotchi {
     public Gotchi(String name, int stamina, int agility, int strength) {
         this.name = name;
         this.level = new SimpleIntegerProperty(MIN_LEVEL);
-        this.experience = new SimpleIntegerProperty(MIN_VALUE);
+        this.exp = new SimpleIntegerProperty(MIN_VALUE);
 
         this.energy = new SimpleIntegerProperty(MAX_VALUE);
         this.food = new SimpleIntegerProperty(MAX_VALUE);
@@ -40,7 +33,7 @@ public class Gotchi {
         return name;
     }
     public SimpleIntegerProperty getLevelProperty() { return this.level; }
-    public SimpleIntegerProperty getExperienceProperty() { return this.experience; }
+    public SimpleIntegerProperty getExpProperty() { return this.exp; }
 
     public SimpleIntegerProperty getEnergyProperty() {
         return this.energy;
@@ -55,7 +48,7 @@ public class Gotchi {
     public SimpleIntegerProperty getStrengthProperty() { return this.strength; }
 
     public int getLevel() { return getLevelProperty().intValue(); }
-    public int getExperience() { return getExperienceProperty().intValue(); }
+    public int getExp() { return getExpProperty().intValue(); }
 
     public int getEnergy() { return getEnergyProperty().intValue(); }
     public int getFood() { return getFoodProperty().intValue(); }
@@ -70,22 +63,12 @@ public class Gotchi {
     public void setClean(int clean) { this.clean.set(clean); }
 
     public void setLevel(int level) { this.level.set(level); }
-    public void setExperience(int experience) { this.experience.set(experience); }
+    public void setExp(int exp) { this.exp.set(exp); }
     public void setStamina(int stamina) { this.stamina.set(stamina); }
     public void setAgility(int agility) { this.agility.set(agility); }
     public void setStrength(int strength) { this.strength.set(strength); }
 
-    public void sleep () {
-        if (getEnergy() == MAX_VALUE) {
-            System.out.println("-Не хочу спать-");
-        }
-        setEnergy(getEnergy() + 7);
-        if (getEnergy() > MAX_VALUE) {
-            setEnergy(getEnergy() - (getEnergy() % 100));
-        }
-    }
-
-    public void unSleep () {
+    public void becomeSleepy() {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -100,17 +83,7 @@ public class Gotchi {
         });
     }
 
-    public void eat() {
-        if (getFood() == MAX_VALUE) {
-            System.out.println("-Не хочу есть-");
-        }
-        setFood(getFood() + 6);
-        if (getFood() > MAX_VALUE) {
-            setFood(getFood() - (getFood() % 100) );
-        }
-    }
-
-    public void unEat () {
+    public void becomeHungry() {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -125,17 +98,7 @@ public class Gotchi {
         });
     }
 
-    public void treat() {
-        if (getHealth() == MAX_VALUE) {
-            System.out.println("-Не хочу лечиться-");
-        }
-        setHealth(getHealth() + 8);
-        if (getHealth() > MAX_VALUE) {
-            setHealth(getHealth() - (getHealth() % 100) );
-        }
-    }
-
-    /*public void unTreat () {
+    /*public void becomeSick() {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -150,16 +113,7 @@ public class Gotchi {
         });
     }*/
 
-    public void makeHappy() {
-        if (getMood() != MAX_VALUE) {
-            setMood(getMood() + 2);
-        }
-        if (getMood() > MAX_VALUE) {
-            setHealth(getHealth() - (getHealth() % 100));
-        }
-    }
-
-    public void unHappy() {
+    public void becomeSad() {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -174,17 +128,7 @@ public class Gotchi {
         });
     }
 
-    public void wash() {
-        if (getClean() == MAX_VALUE) {
-            System.out.println("-Не хочу купаться-");
-        }
-        setClean(getClean() + 4);
-        if (getClean() > MAX_VALUE) {
-            setClean(getClean() - (getClean() % 100));
-        }
-    }
-
-    public void unWash() {
+    public void becomeDirty() {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {

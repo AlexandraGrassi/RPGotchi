@@ -2,13 +2,11 @@ package ai151.grassi.model;
 
 public class LivingEngine {
 
-    // Синглтон
     private Gotchi myGotchi;
 
     public void addGotchi(Gotchi gotchi) {
         myGotchi = gotchi;
     }
-
     public void deleteGotchi() {
         myGotchi = null;
     }
@@ -26,10 +24,10 @@ public class LivingEngine {
                     try {
                         // TODO - добавить потоки для понижения каждой потребности в разное время
                         Thread.sleep(5000);
-                        myGotchi.unSleep();
-                        myGotchi.unEat();
-                        myGotchi.unHappy();
-                        myGotchi.unWash();
+                        myGotchi.becomeSleepy();
+                        myGotchi.becomeHungry();
+                        myGotchi.becomeSad();
+                        myGotchi.becomeDirty();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
