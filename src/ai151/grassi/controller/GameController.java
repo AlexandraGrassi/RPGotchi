@@ -31,7 +31,7 @@ public class GameController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         livingEngine = new LivingEngine();
-        myGotchi = new Gotchi("Meow", 10, 10, 10);
+        myGotchi = new Gotchi("Meow",10,10, 10);
         game = new GameEngine();
         game.addGotchi(myGotchi);
         livingEngine.addGotchi(myGotchi);

@@ -4,16 +4,18 @@ import static ai151.grassi.model.GameConstants.*;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class Gotchi {
+public class Gotchi extends Fighter {
 
     private SimpleIntegerProperty level;
     private SimpleIntegerProperty exp;
     private String name;
 
-    private SimpleIntegerProperty stamina, agility, strength; //выносливость, ловкость, сила
     private SimpleIntegerProperty energy, food, health, mood, clean; // энергия, здоровье, настроение, чистота, сытость
 
-    public Gotchi(String name, int stamina, int agility, int strength) {
+    private int countWins;
+
+    public Gotchi(String name, int stamina, int strength, int agility) {
+        super(stamina, strength, agility);
         this.name = name;
         this.level = new SimpleIntegerProperty(MIN_LEVEL);
         this.exp = new SimpleIntegerProperty(MIN_VALUE);
@@ -23,10 +25,6 @@ public class Gotchi {
         this.health = new SimpleIntegerProperty(MAX_VALUE);
         this.mood = new SimpleIntegerProperty(MAX_VALUE);
         this.clean = new SimpleIntegerProperty(MAX_VALUE);
-
-        this.stamina = new SimpleIntegerProperty(stamina);
-        this.agility = new SimpleIntegerProperty(agility);
-        this.strength = new SimpleIntegerProperty(strength);
     }
 
     public String getName() {
@@ -42,10 +40,6 @@ public class Gotchi {
     public SimpleIntegerProperty getHealthProperty() { return this.health; }
     public SimpleIntegerProperty getMoodProperty() { return this.mood; }
     public SimpleIntegerProperty getCleanProperty() { return this.clean; }
-
-    public SimpleIntegerProperty getStaminaProperty() { return this.stamina; }
-    public SimpleIntegerProperty getAgilityProperty() { return this.agility; }
-    public SimpleIntegerProperty getStrengthProperty() { return this.strength; }
 
     public int getLevel() { return getLevelProperty().intValue(); }
     public int getExp() { return getExpProperty().intValue(); }
@@ -64,9 +58,34 @@ public class Gotchi {
 
     public void setLevel(int level) { this.level.set(level); }
     public void setExp(int exp) { this.exp.set(exp); }
-    public void setStamina(int stamina) { this.stamina.set(stamina); }
-    public void setAgility(int agility) { this.agility.set(agility); }
-    public void setStrength(int strength) { this.strength.set(strength); }
+
+    private void levelUp() {
+        if(countWins == 1 || countWins == 2 || countWins == 3 || countWins == 4) {
+            setStrength(getStrength()+10);
+            setStamina(getStamina()+10);
+            setAgility(getAgility()+10);
+        } else if (countWins == 6 || countWins == 8 || countWins == 10 || countWins == 12){
+            setStrength(getStrength()+5);
+            setStamina(getStamina()+5);
+            setAgility(getAgility()+5);
+        } else if(countWins == 15) {
+            setStrength(100);
+            setStamina(100);
+            setAgility(100);
+        }
+    }
+
+    public int getSumOfAbilities() {
+        return getStamina()+getAgility()+getStrength();
+    }
+
+    public Monster getMonster() {
+        Monster monster;
+        MonsterFactory monsterFactory = new MonsterFactory();
+        monster = monsterFactory.createMonster(getSumOfAbilities());
+        return monster;
+    }
+
 
     public void becomeSleepy() {
         Platform.runLater(new Runnable() {
