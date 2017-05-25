@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="fightWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="color" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ai151.grassi.controller.FightController">
+<VBox fx:id="fightWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="color" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ai151.grassi.controller.FightController">
    <children>
       <HBox alignment="CENTER">
          <children>
@@ -25,29 +25,38 @@
                   <Insets left="-20.0" right="20.0" />
                </HBox.margin>
                </Button>
-            <ProgressBar prefWidth="225.0" progress="1.0" style="-fx-background-color: #37ff8f;" />
-            <Pane maxHeight="70.0" maxWidth="70.0" minHeight="70.0" minWidth="70.0" prefHeight="70.0" prefWidth="70.0">
+            <Group>
                <children>
-                  <Circle fill="#34495e" layoutX="35.0" layoutY="38.0" radius="35.0" stroke="#f2c50f" strokeType="INSIDE" strokeWidth="3.0" />
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="10.0" prefHeight="51.0" prefWidth="43.0" text="VS" textFill="#f2c50f">
-                     <font>
-                        <Font name="System Bold" size="35.0" />
-                     </font>
-                  </Label>
-               </children>
-            </Pane>
-            <ProgressBar prefWidth="225.0" progress="1.0" />
-         </children>
-      </HBox>
-      <HBox>
-         <children>
-            <VBox alignment="CENTER" maxWidth="325.0" minWidth="325.0" prefWidth="325.0">
-               <children>
-                  <Label prefHeight="0.0" prefWidth="77.0" text="Имя Gotchi" textFill="WHITE">
+                  <ProgressBar fx:id="gotchiHp" layoutY="26.0" prefWidth="225.0" progress="1.0" style="-fx-background-color: #37ff8f;" />
+                  <Pane layoutX="225.0" maxHeight="70.0" maxWidth="70.0" minHeight="70.0" minWidth="70.0" prefHeight="70.0" prefWidth="70.0">
+                     <children>
+                        <Circle fill="#34495e" layoutX="35.0" layoutY="38.0" radius="35.0" stroke="#f2c50f" strokeType="INSIDE" strokeWidth="3.0" />
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="10.0" prefHeight="51.0" prefWidth="43.0" text="VS" textFill="#f2c50f">
+                           <font>
+                              <Font name="System Bold" size="35.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <ProgressBar fx:id="monsterHp" layoutX="295.0" layoutY="26.0" prefWidth="225.0" progress="1.0" />
+                  <Label fx:id="gotchiName" layoutX="102.0" layoutY="61.0" prefHeight="0.0" prefWidth="77.0" text="Имя Gotchi" textFill="WHITE">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
+                  <Label fx:id="monsterName" contentDisplay="CENTER" layoutX="326.0" layoutY="57.0" prefHeight="21.0" prefWidth="99.0" text="Имя монстра" textFill="WHITE">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Group>
+         </children>
+      </HBox>
+      <HBox prefHeight="270.0" prefWidth="629.0">
+         <children>
+            <VBox alignment="CENTER" maxHeight="270.0" maxWidth="255.0" minHeight="270.0" minWidth="255.0" prefHeight="270.0" prefWidth="255.0">
+               <children>
                   <Group>
                      <children>
                         <Label text="Сила:" textFill="WHITE">
@@ -65,24 +74,24 @@
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <Label layoutX="111.0" layoutY="42.0" text="100" textFill="WHITE">
+                        <Label fx:id="gotchiStamina" layoutX="111.0" layoutY="42.0" text="100" textFill="WHITE">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <Label layoutX="112.0" layoutY="21.0" text="100" textFill="WHITE">
+                        <Label fx:id="gotchiAgility" layoutX="112.0" layoutY="21.0" text="100" textFill="WHITE">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <Label layoutX="112.0" text="100" textFill="WHITE">
+                        <Label fx:id="gotchiStrength" layoutX="112.0" text="100" textFill="WHITE">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Label>
                      </children>
                   </Group>
-                  <Pane maxHeight="240.0" maxWidth="336.0" minHeight="160.0" minWidth="336.0" prefHeight="160.0" prefWidth="336.0" styleClass="gotchi-fight">
+                  <Pane maxHeight="160.0" maxWidth="255.0" minHeight="160.0" minWidth="255.0" prefHeight="160.0" prefWidth="255.0" styleClass="gotchi-fight">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -90,44 +99,14 @@
                         <Insets bottom="14.0" top="14.0" />
                      </VBox.margin>
                   </Pane>
-                  <HBox>
-                     <children>
-                        <Button maxHeight="40.0" maxWidth="85.0" minHeight="40.0" minWidth="85.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="85.0" styleClass="attack1" text="Атака 1" textFill="WHITE">
-                           <font>
-                              <Font name="Arial Bold" size="15.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets left="14.0" right="14.0" />
-                           </HBox.margin>
-                        </Button>
-                        <Button layoutX="10.0" layoutY="10.0" maxHeight="40.0" maxWidth="85.0" minHeight="40.0" minWidth="85.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="85.0" styleClass="attack2" text="Атака 2" textFill="WHITE">
-                           <font>
-                              <Font name="Arial Bold" size="16.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets right="14.0" />
-                           </HBox.margin>
-                        </Button>
-                        <Button layoutX="10.0" layoutY="10.0" maxHeight="40.0" maxWidth="85.0" minHeight="40.0" minWidth="85.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="85.0" styleClass="attack3" text="Атака 3" textFill="WHITE">
-                           <font>
-                              <Font name="Arial" size="16.0" />
-                           </font>
-                        </Button>
-                     </children>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </HBox>
                </children>
+               <HBox.margin>
+                  <Insets left="70.0" />
+               </HBox.margin>
             </VBox>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f2c50f" height="330.0" stroke="WHITE" strokeType="INSIDE" width="4.0" />
-            <VBox alignment="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="314.0" maxWidth="300.0" minHeight="183.0" minWidth="300.0" prefHeight="183.0" prefWidth="300.0">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f2c50f" height="260.0" stroke="WHITE" strokeType="INSIDE" width="4.0" />
+            <VBox alignment="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="270.0" maxWidth="255.0" minHeight="270.0" minWidth="255.0" prefHeight="270.0" prefWidth="255.0">
                <children>
-                  <Label contentDisplay="CENTER" prefHeight="21.0" prefWidth="99.0" text="Имя монстра" textFill="WHITE">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Label>
                   <Group>
                      <children>
                         <Label text="Сила:" textFill="WHITE">
@@ -145,33 +124,70 @@
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <Label layoutX="111.0" layoutY="42.0" text="100" textFill="WHITE">
+                        <Label fx:id="monsterStamina" layoutX="111.0" layoutY="42.0" text="100" textFill="WHITE">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <Label layoutX="112.0" layoutY="21.0" text="100" textFill="WHITE">
+                        <Label fx:id="monsterAgility" layoutX="112.0" layoutY="21.0" text="100" textFill="WHITE">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <Label layoutX="112.0" text="100" textFill="WHITE">
+                        <Label fx:id="monsterStrength" layoutX="112.0" text="100" textFill="WHITE">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Label>
                      </children>
                   </Group>
-                  <Pane maxHeight="240.0" maxWidth="336.0" minHeight="160.0" minWidth="300.0" prefHeight="160.0" prefWidth="300.0" styleClass="monster">
+                  <Pane maxHeight="160.0" maxWidth="255.0" minHeight="160.0" minWidth="255.0" prefHeight="160.0" prefWidth="255.0" styleClass="monster">
                      <VBox.margin>
                         <Insets bottom="14.0" top="14.0" />
-                     </VBox.margin></Pane>
+                     </VBox.margin>
+                  </Pane>
                </children>
                <HBox.margin>
-                  <Insets bottom="28.0" />
+                  <Insets />
                </HBox.margin>
             </VBox>
          </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="64.0" prefWidth="600.0">
+         <children>
+            <Button fx:id="attack1" maxHeight="40.0" maxWidth="85.0" minHeight="40.0" minWidth="85.0" mnemonicParsing="false" onAction="#attackLight" prefHeight="40.0" prefWidth="85.0" styleClass="attack1" text="Атака 1" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="14.0" right="14.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="attack2" maxHeight="40.0" maxWidth="85.0" minHeight="40.0" minWidth="85.0" mnemonicParsing="false" onAction="#attackMedium" prefHeight="40.0" prefWidth="85.0" styleClass="attack2" text="Атака 2" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="16.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="14.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="attack3" maxHeight="40.0" maxWidth="85.0" minHeight="40.0" minWidth="85.0" mnemonicParsing="false" onAction="#attackHard" prefHeight="40.0" prefWidth="85.0" styleClass="attack3" text="Атака 3" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="16.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="14.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="skip" layoutX="275.0" layoutY="14.0" maxHeight="40.0" maxWidth="85.0" minHeight="40.0" minWidth="85.0" mnemonicParsing="false" onAction="#skipMove" prefHeight="40.0" prefWidth="85.0" styleClass="attack2" text="Отдых" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="16.0" />
+               </font>
+            </Button>
+         </children>
+         <VBox.margin>
+            <Insets top="-14.0" />
+         </VBox.margin>
       </HBox>
    </children>
    <stylesheets>

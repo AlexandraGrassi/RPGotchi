@@ -4,28 +4,26 @@ import java.util.Random;
 
 public class MonsterFactory {
 
-    private int monsterType;
-    private int averageAbility;
-    private int minAbility;
-    private int maxAbility;
+    private static int monsterType;
+    private static int averageAbility;
+    private static int minAbility;
+    private static int maxAbility;
 
-    public Monster createMonster(int sumOfAbilities){
+    public static Monster createMonster(int sumOfAbilities){
         averageAbility = sumOfAbilities/3;
         minAbility = averageAbility - 5;
         maxAbility = averageAbility + 5;
         Random random = new Random();
-        monsterType = random.nextInt(1001);
+        monsterType = 1 + random.nextInt(3);
         switch (monsterType) {
             case 1:
-                new StoneMonster("Камушек", maxAbility, averageAbility, minAbility);
-                break;
+                return new StoneMonster("Камушек", maxAbility, averageAbility, minAbility);
             case 2:
-                new WaterMonster("Капелька", averageAbility, maxAbility, minAbility);
-                break;
+                return new WaterMonster("Капелька", averageAbility, maxAbility, minAbility);
             case 3:
-                new FireMonster("Исккорка", minAbility, averageAbility, maxAbility);
-                break;
+                return new FireMonster("Исккорка", minAbility, averageAbility, maxAbility);
+            default:
+                return null;
         }
-        return null;
     }
 }

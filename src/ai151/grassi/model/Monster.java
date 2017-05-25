@@ -9,4 +9,7 @@ public class Monster extends Fighter {
         this.monsterName = name;
     }
 
+    public String getMonsterName() {
+        return monsterName;
+    }
 }

@@ -24,9 +24,9 @@ public class GameController implements Initializable {
     @FXML
     private Label staminaLabel, agilityLabel, strengthLabel;
 
-    private Gotchi myGotchi;
+    private static Gotchi myGotchi;
     private LivingEngine livingEngine;
-    private GameEngine game;
+    private static GameEngine game;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -53,6 +53,18 @@ public class GameController implements Initializable {
         staminaLabel.textProperty().bind(myGotchi.getStaminaProperty().asString());
         agilityLabel.textProperty().bind(myGotchi.getAgilityProperty().asString());
         strengthLabel.textProperty().bind(myGotchi.getStrengthProperty().asString());
+    }
+
+    public static Gotchi getMyGotchi() {
+        return myGotchi;
+    }
+
+    public LivingEngine getLivingEngine() {
+        return livingEngine;
+    }
+
+    public static GameEngine getGame() {
+        return game;
     }
 
     public void sendSleep(ActionEvent actionEvent) {

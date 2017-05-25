@@ -3,6 +3,8 @@ import static ai151.grassi.model.GameConstants.*;
 
 public class GameEngine {
     private Gotchi myGotchi;
+    private Monster monster;
+    private Fight battle;
 
     public void addGotchi(Gotchi gotchi) {
         myGotchi = gotchi;
@@ -58,4 +60,22 @@ public class GameEngine {
         }
     }
 
+    public Monster getMonster() {
+        monster =  MonsterFactory.createMonster(myGotchi.getSumOfAbilities());
+        return monster;
+    }
+
+    public void startBattle() {
+        battle = new Fight(myGotchi, getMonster());
+    }
+
+    public Fight getBattle() {
+        return battle;
+    }
+    public Gotchi getMyGotchi() {
+        return myGotchi;
+    }
+    public Monster getCurMonster() {
+        return monster;
+    }
 }

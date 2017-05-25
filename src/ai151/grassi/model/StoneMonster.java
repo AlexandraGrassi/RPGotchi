@@ -6,4 +6,5 @@ public class StoneMonster extends Monster{
     public StoneMonster(String name, int stamina, int strength, int agility) {
         super(name, stamina, strength, agility);
     }
+
 }

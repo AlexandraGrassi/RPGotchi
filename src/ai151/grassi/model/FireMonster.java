@@ -7,4 +7,5 @@ public class FireMonster extends Monster {
     public FireMonster(String name, int stamina, int strength, int agility) {
         super(name, stamina, strength, agility);
     }
+
 }

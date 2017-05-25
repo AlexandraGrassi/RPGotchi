@@ -65,7 +65,7 @@ public class Fighter {
         return hp.get();
     }
 
-    public SimpleIntegerProperty hpProperty() {
+    public SimpleIntegerProperty getHpProperty() {
         return hp;
     }
 
