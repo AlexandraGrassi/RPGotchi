@@ -14,9 +14,9 @@ public class GameEngine {
         if (myGotchi.getEnergy() == MAX_VALUE) {
             System.out.println("-Не хочу спать-");
         }
-        myGotchi.setEnergy(myGotchi.getEnergy() + 7);
+        myGotchi.setEnergy(myGotchi.getEnergy() + 0.07);
         if (myGotchi.getEnergy() > MAX_VALUE) {
-            myGotchi.setEnergy(myGotchi.getEnergy() - (myGotchi.getEnergy() % 100));
+            myGotchi.setEnergy(MAX_VALUE);
         }
     }
 
@@ -24,9 +24,9 @@ public class GameEngine {
         if (myGotchi.getFood() == MAX_VALUE) {
             System.out.println("-Не хочу есть-");
         }
-        myGotchi.setFood(myGotchi.getFood() + 6);
+        myGotchi.setFood(myGotchi.getFood() + 0.06);
         if (myGotchi.getFood() > MAX_VALUE) {
-            myGotchi.setFood(myGotchi.getFood() - (myGotchi.getFood() % 100) );
+            myGotchi.setFood( MAX_VALUE );
         }
     }
 
@@ -34,18 +34,18 @@ public class GameEngine {
         if (myGotchi.getHealth() == MAX_VALUE) {
             System.out.println("-Не хочу лечиться-");
         }
-        myGotchi.setHealth(myGotchi.getHealth() + 8);
+        myGotchi.setHealth(myGotchi.getHealth() + 0.08);
         if (myGotchi.getHealth() > MAX_VALUE) {
-            myGotchi.setHealth(myGotchi.getHealth() - (myGotchi.getHealth() % 100) );
+            myGotchi.setHealth(MAX_VALUE);
         }
     }
 
     public void makeHappy() {
         if (myGotchi.getMood() != MAX_VALUE) {
-            myGotchi.setMood(myGotchi.getMood() + 2);
+            myGotchi.setMood(myGotchi.getMood() + 0.02);
         }
         if (myGotchi.getMood() > MAX_VALUE) {
-            myGotchi.setHealth(myGotchi.getHealth() - (myGotchi.getHealth() % 100));
+            myGotchi.setMood(MAX_VALUE);
         }
     }
 
@@ -54,9 +54,9 @@ public class GameEngine {
         if (myGotchi.getClean() == MAX_VALUE) {
             System.out.println("-Не хочу купаться-");
         }
-        myGotchi.setClean(myGotchi.getClean() + 4);
+        myGotchi.setClean(myGotchi.getClean() + 0.04);
         if (myGotchi.getClean() > MAX_VALUE) {
-            myGotchi.setClean(myGotchi.getClean() - (myGotchi.getClean() % 100));
+            myGotchi.setClean(MAX_VALUE);
         }
     }
 

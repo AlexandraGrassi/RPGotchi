@@ -4,6 +4,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
@@ -12,7 +13,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="gameWindow" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="color" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ai151.grassi.controller.GameController">
+<HBox fx:id="gameWindow" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="color" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ai151.grassi.controller.GameController">
    <children>
       <VBox>
          <HBox.margin>
@@ -137,42 +138,42 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="foodLabel" layoutX="131.0" layoutY="32.0" prefHeight="25.0" prefWidth="50.0" text="100%" textFill="WHITE">
+                        <VBox layoutX="113.0" layoutY="35.0">
+                           <children>
+                              <ProgressBar fx:id="foodBar" prefHeight="18.0" prefWidth="132.0" progress="1.0">
+                                 <VBox.margin>
+                                    <Insets bottom="7.0" />
+                                 </VBox.margin>
+                              </ProgressBar>
+                              <ProgressBar fx:id="energyBar" prefHeight="18.0" prefWidth="132.0" progress="1.0">
+                                 <VBox.margin>
+                                    <Insets bottom="7.0" />
+                                 </VBox.margin>
+                              </ProgressBar>
+                              <ProgressBar fx:id="healthBar" prefHeight="18.0" prefWidth="132.0" progress="1.0" style="-fx-background-color: #3bff8c;">
+                                 <VBox.margin>
+                                    <Insets bottom="7.0" />
+                                 </VBox.margin>
+                              </ProgressBar>
+                              <ProgressBar fx:id="cleanBar" prefHeight="18.0" prefWidth="132.0" progress="1.0">
+                                 <VBox.margin>
+                                    <Insets bottom="7.0" />
+                                 </VBox.margin>
+                              </ProgressBar>
+                              <ProgressBar id="mood-bar" fx:id="moodBar" prefHeight="18.0" prefWidth="132.0" progress="1.0" />
+                           </children>
+                        </VBox>
+                        <Label fx:id="staminaLabel" layoutX="131.0" layoutY="186.0" prefHeight="25.0" prefWidth="50.0" text="100" textFill="WHITE">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="energyLabel" layoutX="131.0" layoutY="55.0" prefHeight="25.0" prefWidth="50.0" text="100%" textFill="WHITE">
+                        <Label fx:id="agilityLabel" layoutX="131.0" layoutY="211.0" prefHeight="25.0" prefWidth="50.0" text="100" textFill="WHITE">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="healthLabel" layoutX="131.0" layoutY="80.0" prefHeight="25.0" prefWidth="50.0" text="100%" textFill="WHITE">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="cleanLabel" layoutX="131.0" layoutY="103.0" prefHeight="25.0" prefWidth="50.0" text="100%" textFill="WHITE">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="moodLabel" layoutX="131.0" layoutY="127.0" prefHeight="25.0" prefWidth="50.0" text="100%" textFill="WHITE">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="staminaLabel" layoutX="131.0" layoutY="186.0" prefHeight="25.0" prefWidth="50.0" text="100%" textFill="WHITE">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="agilityLabel" layoutX="131.0" layoutY="211.0" prefHeight="25.0" prefWidth="50.0" text="100%" textFill="WHITE">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="strengthLabel" layoutX="131.0" layoutY="236.0" prefHeight="25.0" prefWidth="50.0" text="100%" textFill="WHITE">
+                        <Label fx:id="strengthLabel" layoutX="131.0" layoutY="236.0" prefHeight="25.0" prefWidth="50.0" text="100" textFill="WHITE">
                            <font>
                               <Font size="16.0" />
                            </font>

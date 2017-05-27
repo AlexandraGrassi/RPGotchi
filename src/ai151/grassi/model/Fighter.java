@@ -1,28 +1,33 @@
 package ai151.grassi.model;
 import static ai151.grassi.model.GameConstants.*;
+
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 import java.util.Random;
 
 public class Fighter {
 
-    private SimpleIntegerProperty hp;
+    private SimpleDoubleProperty hp;
     private SimpleIntegerProperty stamina, agility, strength; //выносливость, ловкость, сила
     private int maxFighterStamina;
 
-    private SimpleIntegerProperty attack;
+    private int attack;
     private int chanceToDodge; // шанс увернуться
 
-    public Fighter() {
-        this.hp = new SimpleIntegerProperty(MAX_VALUE);
-    }
-
     public Fighter(int stamina, int strength, int agility) {
+        this.hp = new SimpleDoubleProperty(MAX_VALUE);
+
         this.stamina = new SimpleIntegerProperty(stamina);
         this.strength = new SimpleIntegerProperty(strength);
         this.agility = new SimpleIntegerProperty(agility);
 
         maxFighterStamina = this.getStamina();
+        this.attack = this.getAttack();
+    }
+
+    public int getMaxFighterStamina() {
+        return maxFighterStamina;
     }
 
     public SimpleIntegerProperty getStaminaProperty() {
@@ -61,50 +66,55 @@ public class Fighter {
         this.strength.set(strength);
     }
 
-    public int getHp() {
+    public double getHp() {
         return hp.get();
     }
 
-    public SimpleIntegerProperty getHpProperty() {
+    public SimpleDoubleProperty getHpProperty() {
         return hp;
     }
 
-    public void setHp(int hp) {
-        this.hp.set(hp);
+    public void setHp(double hp) {
+        //this.hp.set(hp);
+        if(getHp() > MIN_VALUE) {
+            this.hp.set(hp);
+            if(getHp() < MIN_VALUE) {
+                this.hp.set(MIN_VALUE);
+            }
+        } else if(getHp() <= MIN_VALUE){
+            this.hp.set(MIN_VALUE);
+        }
     }
 
     public int getAttack() {
-        return attack.get();
-    }
-
-    public SimpleIntegerProperty attackStrengthProperty() {
         return attack;
     }
 
-    public void setAttackStrength(int attackStrength) {
-        this.attack.set(attackStrength);
+    public void setAttack(int attack) {
+        this.attack = attack;
     }
 
     public void attackLight(Fighter opponent){
-        setAttackStrength(strength.intValue() / 2);
-        opponent.setHp(opponent.getHp()-getAttack());
-        if(getStamina() != 0) {
+        if(getStamina() >= getAttack()) {
+            setAttack(strength.intValue() / 2);
             setStamina(getStamina() - getAttack() / 2);
-            if(getStamina() <= 0) {
+            opponent.setHp( (opponent.getHp()*100 - getAttack()) / 100 );
+
+            if(getStamina() <= MIN_VALUE) {
                 System.out.println("Не хватает энергии для удара, необходимо пропустить ход");
             }
         } else {
             System.out.println("Пора отдохнуть");
-
         }
     }
 
+
     public void attackMedium(Fighter opponent){
-        setAttackStrength(strength.intValue());
-        opponent.setHp(opponent.getHp()-getAttack());
-        if(getStamina() != 0) {
+        setAttack(strength.intValue());
+        if(getStamina() >= getAttack()) {
             setStamina(getStamina() - getAttack());
-            if(getStamina() <= 0) {
+            opponent.setHp( (opponent.getHp()*100 - getAttack()) / 100 );
+            if(getStamina() <= MIN_VALUE) {
                 System.out.println("Не хватает энергии для удара, попробуйте легкий удар или пропустите ход");
             }
         } else {
@@ -114,11 +124,11 @@ public class Fighter {
     }
 
     public void attackHard(Fighter opponent){
-        setAttackStrength(strength.intValue()*2);
-        opponent.setHp(opponent.getHp()-getAttack());
-        if(getStamina() != 0) {
+        setAttack(maxFighterStamina);
+        if(getStamina() >= getAttack()) {
             setStamina(getStamina() - maxFighterStamina);
-            if(getStamina() <= 0) {
+            opponent.setHp( (opponent.getHp()*100  - getAttack()) / 100 );
+            if(getStamina() <= MIN_VALUE) {
                 System.out.println("Не хватает энергии для удара, попробуйте легкий или средний удар, или пропустите ход");
             }
         } else {
@@ -126,33 +136,32 @@ public class Fighter {
         }
     }
 
+
+    // увернуться
     public void dodge(Fighter opponent) {
         Random random = new Random();
         chanceToDodge = random.nextInt(1001);
         if(chanceToDodge < getAgility()*10) {
-            opponent.setAttackStrength(0);
+            opponent.setAttack(MIN);
         } else {
             System.out.println("Не увернулся");
         }
     }
 
     public void skipMove(){
-        setAttackStrength(0);
-        setStamina(maxFighterStamina/2);
+        setAttack(MIN);
+        if((getStamina() + maxFighterStamina/2) <= maxFighterStamina) {
+            setStamina(getStamina() + maxFighterStamina/2);
+        } else {
+            setStamina(maxFighterStamina);
+        }
     }
 
     public boolean isLose(){
-        if(hp.intValue() == 0) {
+        if(getHp() == MIN_VALUE) {
             System.out.println("Lose");
         }
         return false;
     }
 
-    public boolean isWin(Fighter opponent){
-        if(opponent.isLose()){
-            System.out.println("WIN");
-            return true;
-        }
-        return false;
-    }
 }

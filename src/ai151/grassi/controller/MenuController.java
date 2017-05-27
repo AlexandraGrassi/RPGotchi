@@ -1,5 +1,6 @@
 package ai151.grassi.controller;
 
+import ai151.grassi.model.Gotchi;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,9 +15,15 @@ public class MenuController implements Initializable {
     @FXML
     private VBox rootPane;
 
+    private static Gotchi myGotchi;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+    }
+
+    public static Gotchi getMyGotchi() {
+        return myGotchi;
     }
 
     public void exitGame(ActionEvent actionEvent) {
@@ -24,8 +31,9 @@ public class MenuController implements Initializable {
     }
 
     public void loadGame(ActionEvent actionEvent) throws Exception {
-        VBox pane = FXMLLoader.load(getClass().getResource("../view/newGameWindow/newGame.fxml"));
-        //HBox pane = FXMLLoader.load(getClass().getResource("../view/gameWindow/game.fxml"));
+        //VBox pane = FXMLLoader.load(getClass().getResource("../view/newGameWindow/newGame.fxml"));
+        myGotchi = new Gotchi("Meow",40,35, 30);
+        HBox pane = FXMLLoader.load(getClass().getResource("../view/gameWindow/game.fxml"));
         rootPane.getChildren().setAll(pane);
     }
 

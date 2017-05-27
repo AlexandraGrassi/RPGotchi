@@ -76,3 +76,16 @@
     -fx-background-color: #1aba9a;
     -fx-text-fill: white;
 }
+
+.progress-bar .bar {
+    -fx-background-insets: 2;
+}
+
+.health-bar {
+    -fx-background-color: #3bff8c;
+}
+
+.green-bar  { -fx-accent:  #36d672; }
+.yellow-bar { -fx-accent: #ffd012; }
+.orange-bar { -fx-accent: #ff6200; }
+.red-bar    { -fx-accent: #ff5443;    }

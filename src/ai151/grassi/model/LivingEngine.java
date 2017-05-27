@@ -7,8 +7,9 @@ public class LivingEngine {
     public void addGotchi(Gotchi gotchi) {
         myGotchi = gotchi;
     }
-    public void deleteGotchi() {
+    public Gotchi deleteGotchi() {
         myGotchi = null;
+        return myGotchi;
     }
 
     public LivingEngine() {
@@ -23,7 +24,7 @@ public class LivingEngine {
                 if (myGotchi != null) {
                     try {
                         // TODO - добавить потоки для понижения каждой потребности в разное время
-                        Thread.sleep(5000);
+                        Thread.sleep(1000);
                         myGotchi.becomeSleepy();
                         myGotchi.becomeHungry();
                         myGotchi.becomeSad();

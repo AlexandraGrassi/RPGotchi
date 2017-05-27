@@ -2,6 +2,7 @@ package ai151.grassi.model;
 import static ai151.grassi.model.GameConstants.*;
 
 import javafx.application.Platform;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class Gotchi extends Fighter {
@@ -10,21 +11,23 @@ public class Gotchi extends Fighter {
     private SimpleIntegerProperty exp;
     private String name;
 
-    private SimpleIntegerProperty energy, food, health, mood, clean; // энергия, здоровье, настроение, чистота, сытость
+    private SimpleDoubleProperty energy, food, health, mood, clean; // энергия, здоровье, настроение, чистота, сытость
 
     private int countWins;
 
+
     public Gotchi(String name, int stamina, int strength, int agility) {
         super(stamina, strength, agility);
+
         this.name = name;
         this.level = new SimpleIntegerProperty(MIN_LEVEL);
-        this.exp = new SimpleIntegerProperty(MIN_VALUE);
+        this.exp = new SimpleIntegerProperty(MIN);
 
-        this.energy = new SimpleIntegerProperty(MAX_VALUE);
-        this.food = new SimpleIntegerProperty(MAX_VALUE);
-        this.health = new SimpleIntegerProperty(MAX_VALUE);
-        this.mood = new SimpleIntegerProperty(MAX_VALUE);
-        this.clean = new SimpleIntegerProperty(MAX_VALUE);
+        this.energy = new SimpleDoubleProperty(MAX_VALUE);
+        this.food = new SimpleDoubleProperty(MAX_VALUE);
+        this.health = new SimpleDoubleProperty(MAX_VALUE);
+        this.mood = new SimpleDoubleProperty(MAX_VALUE);
+        this.clean = new SimpleDoubleProperty(MAX_VALUE);
     }
 
     public String getName() {
@@ -33,28 +36,77 @@ public class Gotchi extends Fighter {
     public SimpleIntegerProperty getLevelProperty() { return this.level; }
     public SimpleIntegerProperty getExpProperty() { return this.exp; }
 
-    public SimpleIntegerProperty getEnergyProperty() {
+    public SimpleDoubleProperty getEnergyProperty() {
         return this.energy;
     }
-    public SimpleIntegerProperty getFoodProperty() { return this.food; }
-    public SimpleIntegerProperty getHealthProperty() { return this.health; }
-    public SimpleIntegerProperty getMoodProperty() { return this.mood; }
-    public SimpleIntegerProperty getCleanProperty() { return this.clean; }
+    public SimpleDoubleProperty getFoodProperty() { return this.food; }
+    public SimpleDoubleProperty getHealthProperty() { return this.health; }
+    public SimpleDoubleProperty getMoodProperty() { return this.mood; }
+    public SimpleDoubleProperty getCleanProperty() { return this.clean; }
 
     public int getLevel() { return getLevelProperty().intValue(); }
     public int getExp() { return getExpProperty().intValue(); }
 
-    public int getEnergy() { return getEnergyProperty().intValue(); }
-    public int getFood() { return getFoodProperty().intValue(); }
-    public int getHealth() { return getHealthProperty().intValue(); }
-    public int getMood() { return getMoodProperty().intValue(); }
-    public int getClean () { return getCleanProperty().intValue(); }
+    public double getEnergy() { return getEnergyProperty().doubleValue(); }
+    public double getFood() { return getFoodProperty().doubleValue(); }
+    public double getHealth() { return getHealthProperty().doubleValue(); }
+    public double getMood() { return getMoodProperty().doubleValue(); }
+    public double getClean () { return getCleanProperty().doubleValue(); }
 
-    public void setEnergy(int energy) { this.energy.set(energy); }
-    public void setFood(int food) { this.food.set(food); }
-    public void setHealth(int health) { this.health.set(health); }
-    public void setMood(int mood) { this.mood.set(mood); }
-    public void setClean(int clean) { this.clean.set(clean); }
+    public void setEnergy(double energy) {
+        if(getEnergy() > MIN_VALUE) {
+            this.energy.set(energy);
+            if(getEnergy() < MIN_VALUE) {
+                this.energy.set(MIN_VALUE);
+            }
+        } else if(getEnergy() <= MIN_VALUE){
+            this.energy.set(MIN_VALUE);
+        }
+    }
+
+    public void setFood(double food) {
+        if(getFood() > MIN_VALUE) {
+            this.food.set(food);
+            if(getFood() < MIN_VALUE) {
+                this.food.set(MIN_VALUE);
+            }
+        } else if(getFood() <= MIN_VALUE){
+            this.food.set(MIN_VALUE);
+        }
+    }
+
+    public void setHealth(double health) {
+        if(getHealth() > MIN_VALUE) {
+            this.health.set(health);
+            if(getHealth() < MIN_VALUE) {
+                this.health.set(MIN_VALUE);
+            }
+        } else if(getHealth() <= MIN_VALUE){
+            this.health.set(MIN_VALUE);
+        }
+    }
+
+    public void setMood(double mood) {
+        if(getMood() > MIN_VALUE) {
+            this.mood.set(mood);
+            if(getMood() < MIN_VALUE) {
+                this.mood.set(MIN_VALUE);
+            }
+        } else if(getMood() <= MIN_VALUE){
+            this.mood.set(MIN_VALUE);
+        }
+    }
+
+    public void setClean(double clean) {
+        if(getClean() > MIN_VALUE) {
+            this.clean.set(clean);
+            if(getClean() < MIN_VALUE) {
+                this.clean.set(MIN_VALUE);
+            }
+        } else if(getClean() <= MIN_VALUE){
+            this.clean.set(MIN_VALUE);
+        }
+    }
 
     public void setLevel(int level) { this.level.set(level); }
     public void setExp(int exp) { this.exp.set(exp); }
@@ -94,10 +146,7 @@ public class Gotchi extends Fighter {
                 if (getEnergy() == MIN_VALUE) {
                     System.out.println("-Я в коме-");
                 }
-                setEnergy(getEnergy() - 10);
-                if (getEnergy() < MIN_VALUE) {
-                    setEnergy(getEnergy() - (getEnergy() % 100));
-                }
+                setEnergy(getEnergy() - 0.1);
             }
         });
     }
@@ -109,10 +158,7 @@ public class Gotchi extends Fighter {
                 if (getFood() == MIN_VALUE) {
                     System.out.println("-Я умер-");
                 }
-                setFood(getFood() - 5);
-                if (getFood() < MIN_VALUE) {
-                    setFood(getFood() - (getFood() % 100));
-                }
+                setFood(getFood() - 0.05);
             }
         });
     }
@@ -124,7 +170,7 @@ public class Gotchi extends Fighter {
                 if (getHealth() == MIN_VALUE) {
                     System.out.println("-Я умер-");
                 }
-                setEnergy(getHealth() - 5);
+                setEnergy((getHealth() - 5)/100);
                 if (getFood() < MIN_VALUE) {
                     setHealth(getHealth() - (getHealth() % 100));
                 }
@@ -139,10 +185,7 @@ public class Gotchi extends Fighter {
                 if (getMood() == MIN_VALUE) {
                     System.out.println("-Я не счастлив-");
                 }
-                setMood(getMood() - 1);
-                if (getMood() < MIN_VALUE) {
-                    setMood(getMood() - (getMood() % 100));
-                }
+                setMood(getMood() - 0.01);
             }
         });
     }
@@ -154,11 +197,9 @@ public class Gotchi extends Fighter {
                 if (getClean() == MIN_VALUE) {
                     System.out.println("-Я очень болен-");
                 }
-                setClean(getClean() - 5);
-                if (getClean() < MIN_VALUE) {
-                    setClean(getClean() - (getClean() % 100));
-                }
+                setClean(getClean() - 0.05);
             }
         });
     }
+
 }

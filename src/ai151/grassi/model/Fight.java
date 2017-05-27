@@ -14,7 +14,7 @@ public class Fight {
     }
 
     public void battle() {
-        while(!gotchi.isLose() || !monster.isLose()) {
+        /*while(!gotchi.isLose() || !monster.isLose()) {
             System.out.printf("Ход монстра...");
             Random random = new Random();
             attack = 1 + random.nextInt(3);
@@ -26,7 +26,7 @@ public class Fight {
                 case 3:
                     monster.attackHard(gotchi);
             }
-        }
+        }*/
     }
 
 }
