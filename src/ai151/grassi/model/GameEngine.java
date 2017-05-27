@@ -11,52 +11,62 @@ public class GameEngine {
     }
 
     public void sendSleep() {
-        if (myGotchi.getEnergy() == MAX_VALUE) {
-            System.out.println("-Не хочу спать-");
-        }
-        myGotchi.setEnergy(myGotchi.getEnergy() + 0.07);
-        if (myGotchi.getEnergy() > MAX_VALUE) {
-            myGotchi.setEnergy(MAX_VALUE);
+        if(!myGotchi.isGone()) {
+            if (myGotchi.getEnergy() == MAX_VALUE) {
+                System.out.println("-Не хочу спать-");
+            }
+            myGotchi.setEnergy(myGotchi.getEnergy() + 0.07);
+            if (myGotchi.getEnergy() > MAX_VALUE) {
+                myGotchi.setEnergy(MAX_VALUE);
+            }
         }
     }
 
     public void feed() {
-        if (myGotchi.getFood() == MAX_VALUE) {
-            System.out.println("-Не хочу есть-");
-        }
-        myGotchi.setFood(myGotchi.getFood() + 0.06);
-        if (myGotchi.getFood() > MAX_VALUE) {
-            myGotchi.setFood( MAX_VALUE );
+        if(!myGotchi.isGone()) {
+            if (myGotchi.getFood() == MAX_VALUE) {
+                System.out.println("-Не хочу есть-");
+            }
+            myGotchi.setFood(myGotchi.getFood() + 0.06);
+            if (myGotchi.getFood() > MAX_VALUE) {
+                myGotchi.setFood( MAX_VALUE );
+            }
         }
     }
 
     public void treat() {
-        if (myGotchi.getHealth() == MAX_VALUE) {
-            System.out.println("-Не хочу лечиться-");
-        }
-        myGotchi.setHealth(myGotchi.getHealth() + 0.08);
-        if (myGotchi.getHealth() > MAX_VALUE) {
-            myGotchi.setHealth(MAX_VALUE);
+        if(!myGotchi.isGone()) {
+            if (myGotchi.getHealth() == MAX_VALUE) {
+                System.out.println("-Не хочу лечиться-");
+            }
+            myGotchi.setHealth(myGotchi.getHealth() + 0.08);
+            if (myGotchi.getHealth() > MAX_VALUE) {
+                myGotchi.setHealth(MAX_VALUE);
+            }
         }
     }
 
     public void makeHappy() {
-        if (myGotchi.getMood() != MAX_VALUE) {
-            myGotchi.setMood(myGotchi.getMood() + 0.02);
-        }
-        if (myGotchi.getMood() > MAX_VALUE) {
-            myGotchi.setMood(MAX_VALUE);
+        if(!myGotchi.isGone()) {
+            if (myGotchi.getMood() != MAX_VALUE) {
+                myGotchi.setMood(myGotchi.getMood() + 0.02);
+            }
+            if (myGotchi.getMood() > MAX_VALUE) {
+                myGotchi.setMood(MAX_VALUE);
+            }
         }
     }
 
 
     public void wash() {
-        if (myGotchi.getClean() == MAX_VALUE) {
-            System.out.println("-Не хочу купаться-");
-        }
-        myGotchi.setClean(myGotchi.getClean() + 0.04);
-        if (myGotchi.getClean() > MAX_VALUE) {
-            myGotchi.setClean(MAX_VALUE);
+        if(!myGotchi.isGone()) {
+            if (myGotchi.getClean() == MAX_VALUE) {
+                System.out.println("-Не хочу купаться-");
+            }
+            myGotchi.setClean(myGotchi.getClean() + 0.04);
+            if (myGotchi.getClean() > MAX_VALUE) {
+                myGotchi.setClean(MAX_VALUE);
+            }
         }
     }
 

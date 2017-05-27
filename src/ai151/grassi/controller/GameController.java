@@ -39,6 +39,7 @@ public class GameController implements Initializable {
         bar.getStyleClass().add(barStyleClass);
     }
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         livingEngine = new LivingEngine();
@@ -57,7 +58,7 @@ public class GameController implements Initializable {
                 double progress = newValue == null ? 0 : newValue.doubleValue();
                 if(progress == 0) {
                     livingEngine.deleteGotchi();
-                    die();
+                    goAway();
                 }
                 if (progress < 0.2) {
                     setBarStyleClass(energyBar, RED_BAR);
@@ -77,7 +78,7 @@ public class GameController implements Initializable {
                 double progress = newValue == null ? 0 : newValue.doubleValue();
                 if(progress == 0) {
                     livingEngine.deleteGotchi();
-                    die();
+                    goAway();
                 }
                 if (progress < 0.2) {
                     setBarStyleClass(foodBar, RED_BAR);
@@ -131,11 +132,12 @@ public class GameController implements Initializable {
         strengthLabel.textProperty().bind(myGotchi.getStrengthProperty().asString());
     }
 
-    public void die() {
+    public void goAway() {
+        myGotchi.setGone(true);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Важная информация!");
         alert.setHeaderText(null);
-        alert.setContentText("Ваш питомец умер :с");
+        alert.setContentText("Ваш питомец ушёл от вас :с");
         alert.showAndWait();
     }
 
@@ -174,9 +176,14 @@ public class GameController implements Initializable {
     }
 
     public void fight(ActionEvent actionEvent) throws Exception{
-        livingEngine.deleteGotchi();
-        VBox pane = FXMLLoader.load(getClass().getResource("../view/fightWindow/fight.fxml"));
-        gameWindow.getChildren().setAll(pane);
+        if(!myGotchi.isGone()) {
+            livingEngine.deleteGotchi();
+            VBox pane = FXMLLoader.load(getClass().getResource("../view/fightWindow/fight.fxml"));
+            gameWindow.getChildren().setAll(pane);
+        } else {
+            goAway();
+        }
+
     }
 
 

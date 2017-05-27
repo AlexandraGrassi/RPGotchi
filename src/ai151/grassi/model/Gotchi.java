@@ -10,6 +10,7 @@ public class Gotchi extends Fighter {
     private SimpleIntegerProperty level;
     private SimpleIntegerProperty exp;
     private String name;
+    private boolean isGone;
 
     private SimpleDoubleProperty energy, food, health, mood, clean; // энергия, здоровье, настроение, чистота, сытость
 
@@ -28,6 +29,16 @@ public class Gotchi extends Fighter {
         this.health = new SimpleDoubleProperty(MAX_VALUE);
         this.mood = new SimpleDoubleProperty(MAX_VALUE);
         this.clean = new SimpleDoubleProperty(MAX_VALUE);
+
+        this.isGone = false;
+    }
+
+    public boolean isGone() {
+        return isGone;
+    }
+
+    public void setGone(boolean gone) {
+        isGone = gone;
     }
 
     public String getName() {
