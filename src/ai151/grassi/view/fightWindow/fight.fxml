@@ -27,7 +27,7 @@
                </Button>
             <Group>
                <children>
-                  <ProgressBar fx:id="gotchiHp" layoutY="26.0" prefWidth="225.0" progress="1.0" style="-fx-background-color: #37ff8f;" />
+                  <ProgressBar fx:id="gotchiHp" layoutY="26.0" prefWidth="225.0" progress="1.0" styleClass="green-bar" />
                   <Pane layoutX="225.0" maxHeight="70.0" maxWidth="70.0" minHeight="70.0" minWidth="70.0" prefHeight="70.0" prefWidth="70.0">
                      <children>
                         <Circle fill="#34495e" layoutX="35.0" layoutY="38.0" radius="35.0" stroke="#f2c50f" strokeType="INSIDE" strokeWidth="3.0" />
@@ -38,7 +38,7 @@
                         </Label>
                      </children>
                   </Pane>
-                  <ProgressBar fx:id="monsterHp" layoutX="295.0" layoutY="26.0" prefWidth="225.0" progress="1.0" />
+                  <ProgressBar fx:id="monsterHp" layoutX="295.0" layoutY="26.0" prefWidth="225.0" progress="1.0" styleClass="green-bar" />
                   <Label fx:id="gotchiName" layoutX="102.0" layoutY="61.0" prefHeight="0.0" prefWidth="77.0" text="Имя Gotchi" textFill="WHITE">
                      <font>
                         <Font size="15.0" />
@@ -193,5 +193,6 @@
    <stylesheets>
       <URL value="@../main.css" />
       <URL value="@fight.css" />
+      <URL value="@../progress-bar.css" />
    </stylesheets>
 </VBox>

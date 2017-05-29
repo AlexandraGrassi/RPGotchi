@@ -23,12 +23,12 @@ public class LivingEngine {
             while (true) {
                 if (myGotchi != null) {
                     try {
-                        // TODO - добавить потоки для понижения каждой потребности в разное время
                         Thread.sleep(1000);
                         myGotchi.becomeSleepy();
                         myGotchi.becomeHungry();
                         myGotchi.becomeSad();
                         myGotchi.becomeDirty();
+                        myGotchi.becomeSick();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

@@ -1,0 +1,8 @@
+.green-bar  { -fx-accent:  #36d672; }
+.yellow-bar { -fx-accent: #ffd012; }
+.orange-bar { -fx-accent: #ff8d25; }
+.red-bar    { -fx-accent: #ff5443; }
+
+.progress-bar .bar {
+    -fx-background-insets: 2;
+}

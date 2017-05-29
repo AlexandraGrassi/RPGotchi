@@ -12,8 +12,10 @@ public class Fighter {
     private SimpleIntegerProperty stamina, agility, strength; //выносливость, ловкость, сила
     private int maxFighterStamina;
 
-    private int attack;
+    private double attack;
+    private int newStamina;
     private int chanceToDodge; // шанс увернуться
+    private boolean moveDone;
 
     public Fighter(int stamina, int strength, int agility) {
         this.hp = new SimpleDoubleProperty(MAX_VALUE);
@@ -32,10 +34,6 @@ public class Fighter {
 
     public SimpleIntegerProperty getStaminaProperty() {
         return stamina;
-    }
-
-    public void setStamina(int stamina) {
-        this.stamina.set(stamina);
     }
 
     public int getStamina() {
@@ -75,7 +73,6 @@ public class Fighter {
     }
 
     public void setHp(double hp) {
-        //this.hp.set(hp);
         if(getHp() > MIN_VALUE) {
             this.hp.set(hp);
             if(getHp() < MIN_VALUE) {
@@ -86,56 +83,55 @@ public class Fighter {
         }
     }
 
-    public int getAttack() {
+    public double getAttack() {
         return attack;
     }
+    public int getAttackInt() {
+        return (int) attack;
+    }
 
-    public void setAttack(int attack) {
+    private void setAttack(double attack) {
         this.attack = attack;
     }
 
-    public void attackLight(Fighter opponent){
-        if(getStamina() >= getAttack()) {
-            setAttack(strength.intValue() / 2);
-            setStamina(getStamina() - getAttack() / 2);
-            opponent.setHp( (opponent.getHp()*100 - getAttack()) / 100 );
+    public void setStamina(int stamina) {
+        this.stamina.set(stamina);
+    }
 
-            if(getStamina() <= MIN_VALUE) {
+    private void attack(double attack, int newStamina, Fighter opponent) {
+        setAttack(attack);
+        if(getStamina() >= newStamina) {
+            if(newStamina < MIN) {
                 System.out.println("Не хватает энергии для удара, необходимо пропустить ход");
+                setAttack(0);
+            } else {
+                setStamina(newStamina);
+                opponent.setHp(opponent.getHp() - getAttack()/100);
+                moveDone = true;
+                setAttack(0);
             }
         } else {
             System.out.println("Пора отдохнуть");
         }
     }
 
+    public void attackLight(Fighter opponent){
+        attack = strength.intValue() / 2;
+        newStamina = getStamina() - getAttackInt() / 2;
+        attack(attack, newStamina, opponent);
+    }
 
     public void attackMedium(Fighter opponent){
-        setAttack(strength.intValue());
-        if(getStamina() >= getAttack()) {
-            setStamina(getStamina() - getAttack());
-            opponent.setHp( (opponent.getHp()*100 - getAttack()) / 100 );
-            if(getStamina() <= MIN_VALUE) {
-                System.out.println("Не хватает энергии для удара, попробуйте легкий удар или пропустите ход");
-            }
-        } else {
-            System.out.println("Пора отдохнуть");
-
-        }
+        attack = strength.intValue() - 10;
+        newStamina = getStamina() - getAttackInt();
+        attack(attack, newStamina, opponent);
     }
 
     public void attackHard(Fighter opponent){
-        setAttack(maxFighterStamina);
-        if(getStamina() >= getAttack()) {
-            setStamina(getStamina() - maxFighterStamina);
-            opponent.setHp( (opponent.getHp()*100  - getAttack()) / 100 );
-            if(getStamina() <= MIN_VALUE) {
-                System.out.println("Не хватает энергии для удара, попробуйте легкий или средний удар, или пропустите ход");
-            }
-        } else {
-            System.out.println("Пора отдохнуть");
-        }
+        attack = maxFighterStamina;
+        newStamina = MIN;
+        attack(attack, newStamina, opponent);
     }
-
 
     // увернуться
     public void dodge(Fighter opponent) {

@@ -174,20 +174,21 @@ public class Gotchi extends Fighter {
         });
     }
 
-    /*public void becomeSick() {
+    public void becomeSick() {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                if (getHealth() == MIN_VALUE) {
+                if(getHealth() == MIN_VALUE) {
                     System.out.println("-Я умер-");
                 }
-                setEnergy((getHealth() - 5)/100);
-                if (getFood() < MIN_VALUE) {
-                    setHealth(getHealth() - (getHealth() % 100));
+                if(getClean() < 0.3 || getFood() < 0.3 || getEnergy() < 0.3) {
+                    setHealth(getHealth() - 0.05);
+                } else {
+                    setHealth(getHealth());
                 }
             }
         });
-    }*/
+    }
 
     public void becomeSad() {
         Platform.runLater(new Runnable() {

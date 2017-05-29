@@ -5,9 +5,16 @@ public class GameEngine {
     private Gotchi myGotchi;
     private Monster monster;
     private Fight battle;
+    private LivingEngine livingEngine;
 
     public void addGotchi(Gotchi gotchi) {
         myGotchi = gotchi;
+        livingEngine = new LivingEngine();
+        livingEngine.addGotchi(myGotchi);
+    }
+
+    public void freezeLivingEngine() {
+        livingEngine.deleteGotchi();
     }
 
     public void sendSleep() {

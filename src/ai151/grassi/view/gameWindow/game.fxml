@@ -140,27 +140,27 @@
                         </Label>
                         <VBox layoutX="113.0" layoutY="35.0">
                            <children>
-                              <ProgressBar fx:id="foodBar" prefHeight="18.0" prefWidth="132.0" progress="1.0">
+                              <ProgressBar fx:id="foodBar" prefHeight="18.0" prefWidth="132.0" progress="1.0" styleClass="green-bar">
                                  <VBox.margin>
                                     <Insets bottom="7.0" />
                                  </VBox.margin>
                               </ProgressBar>
-                              <ProgressBar fx:id="energyBar" prefHeight="18.0" prefWidth="132.0" progress="1.0">
+                              <ProgressBar fx:id="energyBar" prefHeight="18.0" prefWidth="132.0" progress="1.0" styleClass="green-bar">
                                  <VBox.margin>
                                     <Insets bottom="7.0" />
                                  </VBox.margin>
                               </ProgressBar>
-                              <ProgressBar fx:id="healthBar" prefHeight="18.0" prefWidth="132.0" progress="1.0" style="-fx-background-color: #3bff8c;">
+                              <ProgressBar fx:id="healthBar" prefHeight="18.0" prefWidth="132.0" progress="1.0" style="-fx-background-color: #3bff8c;" styleClass="green-bar">
                                  <VBox.margin>
                                     <Insets bottom="7.0" />
                                  </VBox.margin>
                               </ProgressBar>
-                              <ProgressBar fx:id="cleanBar" prefHeight="18.0" prefWidth="132.0" progress="1.0">
+                              <ProgressBar fx:id="cleanBar" prefHeight="18.0" prefWidth="132.0" progress="1.0" styleClass="green-bar">
                                  <VBox.margin>
                                     <Insets bottom="7.0" />
                                  </VBox.margin>
                               </ProgressBar>
-                              <ProgressBar id="mood-bar" fx:id="moodBar" prefHeight="18.0" prefWidth="132.0" progress="1.0" />
+                              <ProgressBar fx:id="moodBar" prefHeight="18.0" prefWidth="132.0" progress="1.0" styleClass="green-bar" />
                            </children>
                         </VBox>
                         <Label fx:id="staminaLabel" layoutX="131.0" layoutY="186.0" prefHeight="25.0" prefWidth="50.0" text="100" textFill="WHITE">
@@ -192,5 +192,6 @@
    <stylesheets>
       <URL value="@game.css" />
       <URL value="@../main.css" />
+      <URL value="@../progress-bar.css" />
    </stylesheets>
 </HBox>

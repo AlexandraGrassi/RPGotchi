@@ -35,8 +35,3 @@
     -fx-background-repeat: no-repeat;
     -fx-background-position: center top;
 }
-
-.progress-bar .bar {
-    -fx-background-insets: 2;
-    -fx-background-color: #2edd7b;
-}
