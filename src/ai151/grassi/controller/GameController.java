@@ -2,7 +2,10 @@ package ai151.grassi.controller;
 
 import ai151.grassi.model.GameEngine;
 import ai151.grassi.model.Gotchi;
-import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,6 +33,19 @@ public class GameController implements Initializable {
 
     private static Gotchi myGotchi;
     private static GameEngine game;
+
+    public static void checkIsGone(ProgressBar bar) {
+        bar.progressProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                double progress = newValue == null ? 0 : newValue.doubleValue();
+                if(progress == MIN_VALUE && !myGotchi.isGone()) {
+                    game.freezeLivingEngine();
+                    goAway();
+                }
+            }
+        });
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -60,48 +76,27 @@ public class GameController implements Initializable {
         game = new GameEngine();
         game.addGotchi(myGotchi);
 
+        checkIsGone(energyBar);
+        checkIsGone(foodBar);
+        checkIsGone(healthBar);
+
         levelLabel.textProperty().bind(myGotchi.getLevelProperty().asString());
         expLabel.textProperty().bind(myGotchi.getExpProperty().asString());
         staminaLabel.textProperty().bind(myGotchi.getStaminaProperty().asString());
         agilityLabel.textProperty().bind(myGotchi.getAgilityProperty().asString());
         strengthLabel.textProperty().bind(myGotchi.getStrengthProperty().asString());
-
-        new Thread() {
-            @Override
-            public void run() {
-                while (true) {
-                    if (myGotchi != null && myGotchi.isGone() == false) {
-                        if(energyBar.getProgress() == MIN_VALUE || foodBar.getProgress() == MIN_VALUE || healthBar.getProgress() == MIN_VALUE) {
-                            try {
-                                game.freezeLivingEngine();
-                                goAway();
-                                Thread.sleep(15000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }
-            }
-        }.start();
     }
 
-    public void goAway() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                myGotchi.setGone(true);
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Важная информация!");
-                alert.setHeaderText(null);
-                alert.setContentText("Ваш питомец ушёл от вас :с");
-                Optional<ButtonType> result = alert.showAndWait();
-                if (result.isPresent()) {
-                    toMenu();
-                }
-            }
-        });
-
+    public static void goAway() {
+        myGotchi.setGone(true);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Важная информация!");
+        alert.setHeaderText(null);
+        alert.setContentText("Ваш питомец ушёл от вас :с");
+        Optional<ButtonType> result = alert.showAndWait();
+       /* if (result.isPresent()) {
+            toMenu();
+        }*/
     }
 
     public static Gotchi getMyGotchi() {

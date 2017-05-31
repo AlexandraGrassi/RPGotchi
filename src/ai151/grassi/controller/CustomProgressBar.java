@@ -28,6 +28,7 @@ public class CustomProgressBar {
             setBarStyleClass(bar, GREEN_BAR);
         }
     }
+
     public static void changeProgressBarColor(ProgressBar bar) {
         bar.progressProperty().addListener(new ChangeListener<Number>() {
             @Override

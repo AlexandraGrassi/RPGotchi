@@ -1,19 +1,23 @@
 package ai151.grassi.model;
 
+import java.util.concurrent.locks.Lock;
+
 public class LivingEngine {
 
     private Gotchi myGotchi;
+    private LivingThread lv;
 
     public void addGotchi(Gotchi gotchi) {
         myGotchi = gotchi;
     }
-    public Gotchi deleteGotchi() {
+
+    public void deleteGotchi() {
+
         myGotchi = null;
-        return myGotchi;
     }
 
     public LivingEngine() {
-        LivingThread lv = new LivingThread();
+        lv = new LivingThread();
         lv.start();
     }
 
@@ -21,17 +25,18 @@ public class LivingEngine {
         @Override
         public void run() {
             while (true) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
                 if (myGotchi != null) {
-                    try {
-                        Thread.sleep(1000);
-                        myGotchi.becomeSleepy();
-                        myGotchi.becomeHungry();
-                        myGotchi.becomeSad();
-                        myGotchi.becomeDirty();
-                        myGotchi.becomeSick();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    myGotchi.becomeSleepy();
+                    myGotchi.becomeHungry();
+                    myGotchi.becomeSad();
+                    myGotchi.becomeDirty();
+                    myGotchi.becomeSick();
                 }
             }
         }

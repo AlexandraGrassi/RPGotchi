@@ -95,4 +95,8 @@ public class GameEngine {
     public Monster getCurMonster() {
         return monster;
     }
+
+    public LivingEngine getLivingEngine() {
+        return livingEngine;
+    }
 }
