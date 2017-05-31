@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 public class FightController implements Initializable {
 
     private GameEngine game;
-    private Fight fight;
+    private Battle battle;
     private Gotchi gotchi;
     private Monster monster;
 
@@ -40,7 +40,7 @@ public class FightController implements Initializable {
         gotchi = GameController.getMyGotchi();
         game = GameController.getGame();
         game.startBattle();
-        fight = game.getBattle();
+        battle = game.getBattle();
         monster = game.getCurMonster();
 
         gotchiHp.progressProperty().bind(gotchi.getHpProperty());

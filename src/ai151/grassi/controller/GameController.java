@@ -66,8 +66,24 @@ public class GameController implements Initializable {
         agilityLabel.textProperty().bind(myGotchi.getAgilityProperty().asString());
         strengthLabel.textProperty().bind(myGotchi.getStrengthProperty().asString());
 
-        GameThread gameThread = new GameThread();
-        gameThread.start();
+        new Thread() {
+            @Override
+            public void run() {
+                while (true) {
+                    if (myGotchi != null && myGotchi.isGone() == false) {
+                        if(energyBar.getProgress() == MIN_VALUE || foodBar.getProgress() == MIN_VALUE || healthBar.getProgress() == MIN_VALUE) {
+                            try {
+                                game.freezeLivingEngine();
+                                goAway();
+                                Thread.sleep(15000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+            }
+        }.start();
     }
 
     public void goAway() {
@@ -134,25 +150,6 @@ public class GameController implements Initializable {
             gameWindow.getChildren().setAll(pane);
         } else {
             goAway();
-        }
-    }
-
-    class GameThread extends Thread {
-        @Override
-        public void run() {
-            while (true) {
-                if (myGotchi != null && myGotchi.isGone() == false) {
-                    if(energyBar.getProgress() == MIN_VALUE || foodBar.getProgress() == MIN_VALUE || healthBar.getProgress() == MIN_VALUE) {
-                        try {
-                            game.freezeLivingEngine();
-                            goAway();
-                            Thread.sleep(15000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
         }
     }
 

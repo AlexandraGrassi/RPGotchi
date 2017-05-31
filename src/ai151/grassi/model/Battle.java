@@ -2,13 +2,13 @@ package ai151.grassi.model;
 
 import java.util.Random;
 
-public class Fight {
+public class Battle {
 
     private Gotchi gotchi;
     private Monster monster;
     private int attack;
 
-    public Fight(Gotchi gotchi, Monster monster) {
+    public Battle(Gotchi gotchi, Monster monster) {
         this.gotchi = gotchi;
         this.monster = monster;
     }

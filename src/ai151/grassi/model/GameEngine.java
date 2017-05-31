@@ -4,7 +4,7 @@ import static ai151.grassi.model.GameConstants.*;
 public class GameEngine {
     private Gotchi myGotchi;
     private Monster monster;
-    private Fight battle;
+    private Battle battle;
     private LivingEngine livingEngine;
 
     public void addGotchi(Gotchi gotchi) {
@@ -83,10 +83,10 @@ public class GameEngine {
     }
 
     public void startBattle() {
-        battle = new Fight(myGotchi, getMonster());
+        battle = new Battle(myGotchi, getMonster());
     }
 
-    public Fight getBattle() {
+    public Battle getBattle() {
         return battle;
     }
     public Gotchi getMyGotchi() {
