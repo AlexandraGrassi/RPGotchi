@@ -5,10 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 
@@ -33,15 +30,14 @@ public class FightController implements Initializable {
     private Label monsterName, monsterStrength, monsterAgility, monsterStamina;
     @FXML
     private ProgressBar gotchiHp, monsterHp;
+    @FXML
+    private Button attack1, attack2, attack3;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         gotchi = GameController.getMyGotchi();
-        game = GameController.getGame();
-        game.startBattle();
-        battle = game.getBattle();
-        monster = game.getCurMonster();
+        monster = GameController.getCurMonster();
 
         gotchiHp.progressProperty().bind(gotchi.getHpProperty());
         CustomProgressBar.setBarStyleClass(gotchiHp, CustomProgressBar.GREEN_BAR);
@@ -61,6 +57,11 @@ public class FightController implements Initializable {
         monsterStrength.textProperty().bind(monster.getStaminaProperty().asString());
         monsterAgility.textProperty().bind(monster.getAgilityProperty().asString());
         monsterStamina.textProperty().bind(monster.getStrengthProperty().asString());
+
+        battle = new Battle(gotchi,monster);
+        battle.beginBattle();
+
+
     }
 
     public void goBackToGame(ActionEvent actionEvent) {
@@ -94,6 +95,7 @@ public class FightController implements Initializable {
 
     public void skipMove(ActionEvent actionEvent) {
         gotchi.skipMove();
+        gotchi.setMoveDone(true);
     }
 
     public void winBattle() {

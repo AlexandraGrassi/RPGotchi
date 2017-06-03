@@ -82,19 +82,12 @@ public class GameEngine {
         return monster;
     }
 
-    public void startBattle() {
-        battle = new Battle(myGotchi, getMonster());
-    }
-
-    public Battle getBattle() {
-        return battle;
-    }
     public Gotchi getMyGotchi() {
         return myGotchi;
     }
-    public Monster getCurMonster() {
+/*    public Monster getCurMonster() {
         return monster;
-    }
+    }*/
 
     public LivingEngine getLivingEngine() {
         return livingEngine;

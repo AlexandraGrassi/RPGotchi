@@ -1,11 +1,10 @@
 package ai151.grassi.controller;
 
+import ai151.grassi.model.Battle;
 import ai151.grassi.model.GameEngine;
 import ai151.grassi.model.Gotchi;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import ai151.grassi.model.Monster;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +17,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import static ai151.grassi.model.GameConstants.MIN_VALUE;
 
@@ -33,19 +36,10 @@ public class GameController implements Initializable {
 
     private static Gotchi myGotchi;
     private static GameEngine game;
+    private Battle battle;
 
-    public static void checkIsGone(ProgressBar bar) {
-        bar.progressProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                double progress = newValue == null ? 0 : newValue.doubleValue();
-                if(progress == MIN_VALUE && !myGotchi.isGone()) {
-                    game.freezeLivingEngine();
-                    goAway();
-                }
-            }
-        });
-    }
+    final Lock lock = new ReentrantLock();
+    final Condition notNull  = lock.newCondition();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -76,31 +70,55 @@ public class GameController implements Initializable {
         game = new GameEngine();
         game.addGotchi(myGotchi);
 
-        checkIsGone(energyBar);
-        checkIsGone(foodBar);
-        checkIsGone(healthBar);
-
         levelLabel.textProperty().bind(myGotchi.getLevelProperty().asString());
         expLabel.textProperty().bind(myGotchi.getExpProperty().asString());
         staminaLabel.textProperty().bind(myGotchi.getStaminaProperty().asString());
         agilityLabel.textProperty().bind(myGotchi.getAgilityProperty().asString());
         strengthLabel.textProperty().bind(myGotchi.getStrengthProperty().asString());
+
+        new Thread() {
+            @Override
+            public void run() {
+                while (myGotchi != null && !myGotchi.isGone()) {
+                    try {
+                        lock.lock();
+                        if(energyBar.getProgress() == MIN_VALUE || foodBar.getProgress() == MIN_VALUE || healthBar.getProgress() == MIN_VALUE) {
+                            game.freezeLivingEngine();
+                            goAway();
+                        }
+                        notNull.await(1000, TimeUnit.MILLISECONDS);
+                    } catch (InterruptedException e){
+                        e.printStackTrace();
+                    } finally{
+                        lock.unlock();
+                    }
+                }
+            }
+        }.start();
     }
 
-    public static void goAway() {
-        myGotchi.setGone(true);
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Важная информация!");
-        alert.setHeaderText(null);
-        alert.setContentText("Ваш питомец ушёл от вас :с");
-        Optional<ButtonType> result = alert.showAndWait();
-       /* if (result.isPresent()) {
-            toMenu();
-        }*/
+    public void goAway() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                myGotchi.setGone(true);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Важная информация!");
+                alert.setHeaderText(null);
+                alert.setContentText("Ваш питомец ушёл от вас :с");
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent()) {
+                    toMenu();
+                }
+            }
+        });
     }
 
     public static Gotchi getMyGotchi() {
         return myGotchi;
+    }
+    public static Monster getCurMonster() {
+        return game.getMonster();
     }
 
     public static GameEngine getGame() {
@@ -123,19 +141,23 @@ public class GameController implements Initializable {
         game.wash();
     }
 
-    public void goBackToMenu(ActionEvent actionEvent) throws Exception {
+    public void goBackToMenu(ActionEvent actionEvent) {
         toMenu();
     }
 
     private void toMenu() {
-        try {
-            game.freezeLivingEngine();
-            VBox pane = FXMLLoader.load(getClass().getResource("../view/menuWindow/menu.fxml"));
-            gameWindow.getChildren().setAll(pane);
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    game.freezeLivingEngine();
+                    VBox pane = FXMLLoader.load(getClass().getResource("../view/menuWindow/menu.fxml"));
+                    gameWindow.getChildren().setAll(pane);
+                } catch(IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     public void fight(ActionEvent actionEvent) throws Exception{

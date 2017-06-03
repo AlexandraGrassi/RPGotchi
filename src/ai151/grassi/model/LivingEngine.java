@@ -1,11 +1,16 @@
 package ai151.grassi.model;
 
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class LivingEngine {
 
     private Gotchi myGotchi;
     private LivingThread lv;
+    final Lock lock = new ReentrantLock();
+    final Condition notNull  = lock.newCondition();
 
     public void addGotchi(Gotchi gotchi) {
         myGotchi = gotchi;
@@ -24,19 +29,21 @@ public class LivingEngine {
     class LivingThread extends Thread {
         @Override
         public void run() {
-            while (true) {
+            while (myGotchi != null) {
+                lock.lock();
                 try {
-                    Thread.sleep(1000);
+                    if (myGotchi != null) {
+                        myGotchi.becomeSleepy();
+                        myGotchi.becomeHungry();
+                        myGotchi.becomeSad();
+                        myGotchi.becomeDirty();
+                        myGotchi.becomeSick();
+                    }
+                    notNull.await(1000, TimeUnit.MILLISECONDS);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                }
-
-                if (myGotchi != null) {
-                    myGotchi.becomeSleepy();
-                    myGotchi.becomeHungry();
-                    myGotchi.becomeSad();
-                    myGotchi.becomeDirty();
-                    myGotchi.becomeSick();
+                } finally {
+                    lock.unlock();
                 }
             }
         }

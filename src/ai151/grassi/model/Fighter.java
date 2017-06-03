@@ -72,6 +72,14 @@ public class Fighter {
         return hp;
     }
 
+    public boolean isMoveDone() {
+        return moveDone;
+    }
+
+    public void setMoveDone(boolean moveDone) {
+        this.moveDone = moveDone;
+    }
+
     public void setHp(double hp) {
         if(getHp() > MIN_VALUE) {
             this.hp.set(hp);
@@ -151,6 +159,7 @@ public class Fighter {
         } else {
             setStamina(maxFighterStamina);
         }
+        moveDone = true;
     }
 
     public boolean isLose(){

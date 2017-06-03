@@ -13,18 +13,36 @@ public class Battle {
         this.monster = monster;
     }
 
-    public void battle() {
+    public void beginBattle() {
         /*while(!gotchi.isLose() || !monster.isLose()) {
-            System.out.printf("Ход монстра...");
-            Random random = new Random();
-            attack = 1 + random.nextInt(3);
-            switch (attack) {
-                case 1:
-                    monster.attackLight(gotchi);
-                case 2:
-                    monster.attackMedium(gotchi);
-                case 3:
-                    monster.attackHard(gotchi);
+            if(gotchi.isMoveDone()) {
+                gotchi.setMoveDone(false);
+                while(!monster.isMoveDone()) {
+                    System.out.printf("Ход монстра...");
+                    Random random = new Random();
+                    attack = 1 + random.nextInt(3);
+                    switch (attack) {
+                        case 1: {
+                            monster.attackLight(gotchi);
+                            if(!monster.isMoveDone()) {
+                                monster.skipMove();
+                            }
+                        }
+                        case 2:
+                            monster.attackMedium(gotchi);
+                            if(!monster.isMoveDone()) {
+                                monster.skipMove();
+                            }
+                            break;
+                        case 3:
+                            monster.attackHard(gotchi);
+                            if(!monster.isMoveDone()) {
+                                monster.skipMove();
+                            }
+                            break;
+                    }
+                }
+                monster.setMoveDone(false);
             }
         }*/
     }
