@@ -36,7 +36,7 @@ public class GameController implements Initializable {
 
     private static Gotchi myGotchi;
     private static GameEngine game;
-    private Battle battle;
+    //private Battle battle;
 
     final Lock lock = new ReentrantLock();
     final Condition notNull  = lock.newCondition();

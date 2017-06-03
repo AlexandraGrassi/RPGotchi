@@ -1,6 +1,7 @@
 package ai151.grassi.model;
 import static ai151.grassi.model.GameConstants.*;
 
+import javafx.application.Platform;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
@@ -11,11 +12,12 @@ public class Fighter {
     private SimpleDoubleProperty hp;
     private SimpleIntegerProperty stamina, agility, strength; //выносливость, ловкость, сила
     private int maxFighterStamina;
+    private boolean isLose;
 
     private double attack;
     private int newStamina;
     private int chanceToDodge; // шанс увернуться
-    private boolean moveDone;
+    private boolean moveDone = false;
 
     public Fighter(int stamina, int strength, int agility) {
         this.hp = new SimpleDoubleProperty(MAX_VALUE);
@@ -26,6 +28,10 @@ public class Fighter {
 
         maxFighterStamina = this.getStamina();
         this.attack = this.getAttack();
+    }
+
+    public void setLose(boolean lose) {
+        isLose = lose;
     }
 
     public int getMaxFighterStamina() {
@@ -91,6 +97,10 @@ public class Fighter {
         }
     }
 
+    public void setMaxHp() {
+        setHp(MAX_VALUE);
+    }
+
     public double getAttack() {
         return attack;
     }
@@ -112,6 +122,7 @@ public class Fighter {
             if(newStamina < MIN) {
                 System.out.println("Не хватает энергии для удара, необходимо пропустить ход");
                 setAttack(0);
+                setMoveDone(false);
             } else {
                 setStamina(newStamina);
                 opponent.setHp(opponent.getHp() - getAttack()/100);
