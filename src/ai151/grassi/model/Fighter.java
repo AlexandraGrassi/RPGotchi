@@ -139,14 +139,6 @@ public class Fighter {
         this.newStamina = newStamina;
     }
 
-    public int getChanceToDodge() {
-        return chanceToDodge;
-    }
-
-    public void setChanceToDodge(int chanceToDodge) {
-        this.chanceToDodge = chanceToDodge;
-    }
-
     private void attack(double attack, int newStamina, Fighter opponent) {
         setAttack(attack);
         if(getStamina() >= newStamina) {
@@ -156,6 +148,7 @@ public class Fighter {
                 setMoveDone(false);
             } else {
                 setStamina(newStamina);
+                dodge();
                 opponent.setHp(opponent.getHp() - getAttack()/100);
                 moveDone = true;
                 setAttack(0);
@@ -178,13 +171,14 @@ public class Fighter {
     }
 
     // увернуться
-    public void dodge(Fighter opponent) {
+    public void dodge() {
         Random random = new Random();
         chanceToDodge = random.nextInt(1001);
         if(chanceToDodge < getAgility()*10) {
-            opponent.setAttack(MIN);
+            this.setAttack(MIN);
+            System.out.println("Противник " + this + " увернулся");
         } else {
-            System.out.println("Не увернулся");
+            System.out.println("Противник " + this + " не увернулся");
         }
     }
 
@@ -195,6 +189,7 @@ public class Fighter {
         } else {
             setStamina(maxFighterStamina);
         }
+        dodge();
         moveDone = true;
     }
 

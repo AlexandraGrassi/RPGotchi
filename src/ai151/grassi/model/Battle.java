@@ -15,13 +15,13 @@ public class Battle {
 
     public void beginBattle() {
         gotchi.setMoveDone(false);
-        System.out.printf("Ход монстра...");
+        System.out.println("Ход монстра...");
         Random random = new Random();
         attack = 1 + random.nextInt(3);
         switch (attack) {
             case 1:
                 monster.attackLight(gotchi);
-                System.out.println("Атака" + attack);
+                System.out.println("Атака " + attack);
                 if(!monster.isMoveDone()) {
                     System.out.println("Отдых");
                     monster.skipMove();
@@ -30,8 +30,7 @@ public class Battle {
                 break;
             case 2:
                 monster.attackMedium(gotchi);
-                System.out.println("Атака" + attack);
-                System.out.println(monster.getAttackInt());
+                System.out.println("Атака " + attack);
                 if(!monster.isMoveDone()) {
                     System.out.println("Отдых");
                     monster.skipMove();
@@ -40,7 +39,7 @@ public class Battle {
                 break;
             case 3:
                 monster.attackHard(gotchi);
-                System.out.println("Атака" + attack);
+                System.out.println("Атака " + attack);
                 if(!monster.isMoveDone()) {
                     monster.skipMove();
                     System.out.println("Отдых");
@@ -49,7 +48,7 @@ public class Battle {
                 break;
         }
         monster.skipMove();
-        System.out.println(gotchi.getHp());
+        System.out.println("HP Gotchi = " + gotchi.getHp());
         System.out.println("Ход завершен...");
     }
 }
