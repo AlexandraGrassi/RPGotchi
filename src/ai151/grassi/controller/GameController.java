@@ -77,22 +77,18 @@ public class GameController implements Initializable {
         agilityLabel.textProperty().bind(myGotchi.getAgilityProperty().asString());
         strengthLabel.textProperty().bind(myGotchi.getStrengthProperty().asString());
 
-        levelLabel.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> ov, String t, String t1) {
-                if(myGotchi.getLevel() == MAX_LEVEL) {
-                    game.freezeLivingEngine();
-                    winGame();
-                }
-            }
-        });
-
         new Thread() {
             @Override
             public void run() {
                 while (myGotchi != null && !myGotchi.isGone() && !myGotchi.isWin()) {
                     try {
                         lock.lock();
+                        if(myGotchi.getLevel() == MAX_LEVEL) {
+                            game.freezeLivingEngine();
+                            myGotchi.setWin(true);
+                            notNull.await(1000, TimeUnit.MILLISECONDS);
+                            winGame();
+                        }
                         if(energyBar.getProgress() == MIN_VALUE || foodBar.getProgress() == MIN_VALUE || healthBar.getProgress() == MIN_VALUE) {
                             game.freezeLivingEngine();
                             goAway();
@@ -174,11 +170,10 @@ public class GameController implements Initializable {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                myGotchi.setWin(true);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Важная информация!");
                 alert.setHeaderText(null);
-                alert.setContentText("ВЫ ВЫИГРАЛИ ИГРУ! ПОЗДАВЛЯЕМ :D");
+                alert.setContentText("ВЫ ДОСТИГЛИ 10 УРОВНЯ! ПОЗДАВЛЯЕМ :D");
                 alert.showAndWait();
                 toMenu();
             }
