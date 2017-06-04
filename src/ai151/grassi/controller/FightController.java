@@ -103,6 +103,9 @@ public class FightController implements Initializable {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+                gotchi.setCountWins(gotchi.getCountWins() + 1);
+                System.out.println(gotchi.getCountWins());
+                gotchi.levelUp();
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Важная информация!");
                 alert.setHeaderText(null);

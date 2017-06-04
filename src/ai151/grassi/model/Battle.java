@@ -16,7 +16,7 @@ public class Battle {
     public void beginBattle() {
         gotchi.setMoveDone(false);
         System.out.printf("Ход монстра...");
-        Random random = new Random();
+       /* Random random = new Random();
         attack = 1 + random.nextInt(3);
         switch (attack) {
             case 1:
@@ -46,7 +46,8 @@ public class Battle {
                 }
                 attack = 0;
                 break;
-        }
+        }*/
+        monster.skipMove();
         System.out.println(gotchi.getHp());
         System.out.println("Ход завершен...");
     }

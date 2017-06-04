@@ -11,6 +11,7 @@ public class Gotchi extends Fighter {
     private SimpleIntegerProperty exp;
     private String name;
     private boolean isGone;
+    private boolean isWin;
 
     private SimpleDoubleProperty energy, food, health, mood, clean; // энергия, здоровье, настроение, чистота, сытость
 
@@ -21,7 +22,9 @@ public class Gotchi extends Fighter {
         super(stamina, strength, agility);
 
         this.name = name;
-        this.level = new SimpleIntegerProperty(MIN_LEVEL);
+        //this.level = new SimpleIntegerProperty(MIN_LEVEL);
+        this.level = new SimpleIntegerProperty(9);
+        countWins = 12;
         this.exp = new SimpleIntegerProperty(MIN);
 
         this.energy = new SimpleDoubleProperty(MAX_VALUE);
@@ -31,6 +34,14 @@ public class Gotchi extends Fighter {
         this.clean = new SimpleDoubleProperty(MAX_VALUE);
 
         this.isGone = false;
+    }
+
+    public boolean isWin() {
+        return isWin;
+    }
+
+    public void setWin(boolean win) {
+        isWin = win;
     }
 
     public boolean isGone() {
@@ -120,22 +131,48 @@ public class Gotchi extends Fighter {
     }
 
     public void setLevel(int level) { this.level.set(level); }
-    public void setExp(int exp) { this.exp.set(exp); }
 
-    private void levelUp() {
+    public void setExp() {
+        if (countWins == 5 || countWins == 7 || countWins == 9 || countWins == 11) {
+            this.exp.set(50);
+        } else if(countWins == 13 || countWins == 14) {
+            this.exp.set(getExp() + 34);
+        }
+    }
+
+    public void setMinExp() {
+        this.exp.set(MIN);
+    }
+
+    public void levelUp() {
+        setExp();
         if(countWins == 1 || countWins == 2 || countWins == 3 || countWins == 4) {
+            setMinExp();
             setStrength(getStrength()+10);
             setStamina(getStamina()+10);
             setAgility(getAgility()+10);
+            setLevel(getLevel() + 1);
         } else if (countWins == 6 || countWins == 8 || countWins == 10 || countWins == 12){
+            setMinExp();
             setStrength(getStrength()+5);
             setStamina(getStamina()+5);
             setAgility(getAgility()+5);
+            setLevel(getLevel() + 1);
         } else if(countWins == 15) {
+            setMinExp();
             setStrength(100);
             setStamina(100);
             setAgility(100);
+            setLevel(getLevel() + 1);
         }
+    }
+
+    public void setCountWins(int countWins) {
+        this.countWins = countWins;
+    }
+
+    public int getCountWins() {
+        return countWins;
     }
 
     public int getSumOfAbilities() {

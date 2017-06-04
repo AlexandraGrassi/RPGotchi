@@ -33,14 +33,13 @@ public class LivingEngine {
                 lock.lock();
                 try {
                     notNull.await(1000, TimeUnit.MILLISECONDS);
-                    if (myGotchi != null) {
+                   /* if (myGotchi != null) {
                         myGotchi.becomeSleepy();
                         myGotchi.becomeHungry();
                         myGotchi.becomeSad();
                         myGotchi.becomeDirty();
                         myGotchi.becomeSick();
-                    }
-
+                    }*/
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {

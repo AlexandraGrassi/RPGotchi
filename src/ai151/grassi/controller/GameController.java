@@ -4,6 +4,8 @@ import ai151.grassi.model.GameEngine;
 import ai151.grassi.model.Gotchi;
 import ai151.grassi.model.Monster;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +22,7 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import static ai151.grassi.model.GameConstants.MAX_LEVEL;
 import static ai151.grassi.model.GameConstants.MIN_VALUE;
 
 public class GameController implements Initializable {
@@ -74,10 +77,20 @@ public class GameController implements Initializable {
         agilityLabel.textProperty().bind(myGotchi.getAgilityProperty().asString());
         strengthLabel.textProperty().bind(myGotchi.getStrengthProperty().asString());
 
+        levelLabel.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> ov, String t, String t1) {
+                if(myGotchi.getLevel() == MAX_LEVEL) {
+                    game.freezeLivingEngine();
+                    winGame();
+                }
+            }
+        });
+
         new Thread() {
             @Override
             public void run() {
-                while (myGotchi != null && !myGotchi.isGone()) {
+                while (myGotchi != null && !myGotchi.isGone() && !myGotchi.isWin()) {
                     try {
                         lock.lock();
                         if(energyBar.getProgress() == MIN_VALUE || foodBar.getProgress() == MIN_VALUE || healthBar.getProgress() == MIN_VALUE) {
@@ -93,6 +106,7 @@ public class GameController implements Initializable {
                 }
             }
         }.start();
+
     }
 
     public void goAway() {
@@ -154,6 +168,22 @@ public class GameController implements Initializable {
                 }
             }
         });
+    }
+
+    private void winGame() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                myGotchi.setWin(true);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Важная информация!");
+                alert.setHeaderText(null);
+                alert.setContentText("ВЫ ВЫИГРАЛИ ИГРУ! ПОЗДАВЛЯЕМ :D");
+                alert.showAndWait();
+                toMenu();
+            }
+        });
+
     }
 
     public void fight(ActionEvent actionEvent) throws Exception{
