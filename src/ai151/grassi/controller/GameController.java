@@ -1,6 +1,5 @@
 package ai151.grassi.controller;
 
-import ai151.grassi.model.Battle;
 import ai151.grassi.model.GameEngine;
 import ai151.grassi.model.Gotchi;
 import ai151.grassi.model.Monster;
@@ -15,7 +14,6 @@ import javafx.scene.layout.HBox;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
@@ -106,10 +104,8 @@ public class GameController implements Initializable {
                 alert.setTitle("Важная информация!");
                 alert.setHeaderText(null);
                 alert.setContentText("Ваш питомец ушёл от вас :с");
-                Optional<ButtonType> result = alert.showAndWait();
-                if (result.isPresent()) {
-                    toMenu();
-                }
+                alert.showAndWait();
+                toMenu();
             }
         });
     }
@@ -162,6 +158,8 @@ public class GameController implements Initializable {
 
     public void fight(ActionEvent actionEvent) throws Exception{
         if(!myGotchi.isGone()) {
+            myGotchi.setMaxHp();
+            System.out.println(myGotchi.isLose());
             game.freezeLivingEngine();
             VBox pane = FXMLLoader.load(getClass().getResource("../view/fightWindow/fight.fxml"));
             gameWindow.getChildren().setAll(pane);

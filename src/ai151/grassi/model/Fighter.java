@@ -12,7 +12,6 @@ public class Fighter {
     private SimpleDoubleProperty hp;
     private SimpleIntegerProperty stamina, agility, strength; //выносливость, ловкость, сила
     private int maxFighterStamina;
-    private boolean isLose;
 
     private double attack;
     private int newStamina;
@@ -28,10 +27,6 @@ public class Fighter {
 
         maxFighterStamina = this.getStamina();
         this.attack = this.getAttack();
-    }
-
-    public void setLose(boolean lose) {
-        isLose = lose;
     }
 
     public int getMaxFighterStamina() {
@@ -98,7 +93,7 @@ public class Fighter {
     }
 
     public void setMaxHp() {
-        setHp(MAX_VALUE);
+        this.hp.set(MAX_VALUE);
     }
 
     public double getAttack() {
@@ -175,7 +170,7 @@ public class Fighter {
 
     public boolean isLose(){
         if(getHp() == MIN_VALUE) {
-            System.out.println("Lose");
+            return true;
         }
         return false;
     }
