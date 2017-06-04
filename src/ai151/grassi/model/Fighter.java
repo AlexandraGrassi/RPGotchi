@@ -1,9 +1,9 @@
 package ai151.grassi.model;
 import static ai151.grassi.model.GameConstants.*;
 
-import javafx.application.Platform;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 import java.util.Random;
 
@@ -11,22 +11,31 @@ public class Fighter {
 
     private SimpleDoubleProperty hp;
     private SimpleIntegerProperty stamina, agility, strength; //выносливость, ловкость, сила
+    private SimpleStringProperty fightInfo;
     private int maxFighterStamina;
+    private String name;
+    private boolean isSkipMove = false;
 
     private double attack;
     private int newStamina;
     private int chanceToDodge; // шанс увернуться
     private boolean moveDone = false;
 
-    public Fighter(int stamina, int strength, int agility) {
+    public Fighter(String name, int stamina, int strength, int agility) {
         this.hp = new SimpleDoubleProperty(MAX_VALUE);
 
+        this.name = name;
         this.stamina = new SimpleIntegerProperty(stamina);
         this.strength = new SimpleIntegerProperty(strength);
         this.agility = new SimpleIntegerProperty(agility);
 
         maxFighterStamina = this.getStamina();
         this.attack = this.getAttack();
+        this.fightInfo = new SimpleStringProperty("");
+    }
+
+    public String getName() {
+        return name;
     }
 
     public int getMaxFighterStamina() {
@@ -77,8 +86,8 @@ public class Fighter {
         return moveDone;
     }
 
-    public void setMoveDone(boolean moveDone) {
-        this.moveDone = moveDone;
+    public void setMoveDone() {
+        this.moveDone = false;
     }
 
     public void setHp(double hp) {
@@ -90,6 +99,18 @@ public class Fighter {
         } else if(getHp() <= MIN_VALUE){
             this.hp.set(MIN_VALUE);
         }
+    }
+
+    public String getFightInfo() {
+        return fightInfo.get();
+    }
+
+    public SimpleStringProperty fightInfoProperty() {
+        return fightInfo;
+    }
+
+    public void setFightInfo(String fightInfo) {
+        this.fightInfo.set(fightInfo);
     }
 
     public void setMaxHp() {
@@ -111,30 +132,6 @@ public class Fighter {
         this.stamina.set(stamina);
     }
 
-    public SimpleDoubleProperty hpProperty() {
-        return hp;
-    }
-
-    public SimpleIntegerProperty staminaProperty() {
-        return stamina;
-    }
-
-    public SimpleIntegerProperty agilityProperty() {
-        return agility;
-    }
-
-    public SimpleIntegerProperty strengthProperty() {
-        return strength;
-    }
-
-    public void setMaxFighterStamina(int maxFighterStamina) {
-        this.maxFighterStamina = maxFighterStamina;
-    }
-
-    public int getNewStamina() {
-        return newStamina;
-    }
-
     public void setNewStamina(int newStamina) {
         this.newStamina = newStamina;
     }
@@ -143,53 +140,58 @@ public class Fighter {
         setAttack(attack);
         if(getStamina() >= newStamina) {
             if(newStamina < MIN) {
-                System.out.println("Не хватает энергии для удара, необходимо пропустить ход");
+                setFightInfo("Не хватает энергии");
                 setAttack(0);
-                setMoveDone(false);
+                setMoveDone();
             } else {
                 setStamina(newStamina);
-                dodge();
+                dodge(opponent);
                 opponent.setHp(opponent.getHp() - getAttack()/100);
                 moveDone = true;
                 setAttack(0);
             }
         } else {
-            System.out.println("Пора отдохнуть");
+            setFightInfo("Не хватает энергии");
         }
     }
 
     public void attackLight(Fighter opponent){
+        isSkipMove = false;
         attack(attack, newStamina, opponent);
     }
 
     public void attackMedium(Fighter opponent){
+        isSkipMove = false;
         attack(attack, newStamina, opponent);
     }
 
-    public void attackHard(Fighter opponent){
+    public void attackHard(Fighter opponent) {
+        isSkipMove = false;
         attack(attack, newStamina, opponent);
     }
 
     // увернуться
-    public void dodge() {
+    public void dodge(Fighter opponent) {
         Random random = new Random();
         chanceToDodge = random.nextInt(1001);
         if(chanceToDodge < getAgility()*10) {
             this.setAttack(MIN);
-            System.out.println("Противник " + this + " увернулся");
-        } else {
-            System.out.println("Противник " + this + " не увернулся");
+            System.out.println(this.getName() + " увернулся");
+            if(!opponent.isSkipMove) {
+                opponent.setFightInfo(this.getName() + " увернулся");
+            }
         }
     }
 
-    public void skipMove(){
+    public void skipMove(Fighter opponent){
         setAttack(MIN);
         if((getStamina() + maxFighterStamina/2) <= maxFighterStamina) {
             setStamina(getStamina() + maxFighterStamina/2);
         } else {
             setStamina(maxFighterStamina);
         }
-        dodge();
+        dodge(opponent);
+        isSkipMove = true;
         moveDone = true;
     }
 

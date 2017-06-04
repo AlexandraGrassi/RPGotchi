@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="gameWindow" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="color" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ai151.grassi.controller.GameController">
+<HBox fx:id="gameWindow" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="color" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ai151.grassi.controller.GameController">
    <children>
       <VBox>
          <HBox.margin>
@@ -32,6 +32,14 @@
       </VBox>
       <VBox alignment="CENTER_LEFT">
          <children>
+            <Label fx:id="mainInfo" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="306.0" text="Label" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="7.0" left="7.0" top="-14.0" />
+               </VBox.margin>
+            </Label>
             <StackPane alignment="BOTTOM_CENTER" prefHeight="300.0" prefWidth="324.0">
                <children>
                   <Circle fill="DODGERBLUE" radius="155.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="4.0">

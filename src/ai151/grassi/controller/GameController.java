@@ -27,7 +27,7 @@ public class GameController implements Initializable {
     @FXML
     private HBox gameWindow;
     @FXML
-    private Label levelLabel, nameLabel, expLabel;
+    private Label levelLabel, nameLabel, expLabel, mainInfo;
     @FXML
     private ProgressBar energyBar, foodBar, healthBar, moodBar, cleanBar;
     @FXML
@@ -74,6 +74,8 @@ public class GameController implements Initializable {
         staminaLabel.textProperty().bind(myGotchi.getStaminaProperty().asString());
         agilityLabel.textProperty().bind(myGotchi.getAgilityProperty().asString());
         strengthLabel.textProperty().bind(myGotchi.getStrengthProperty().asString());
+
+        mainInfo.textProperty().bind(myGotchi.mainInfoProperty());
 
         new Thread(() -> {
             while (myGotchi != null && !myGotchi.isGone() && !myGotchi.isWin()) {
@@ -173,7 +175,6 @@ public class GameController implements Initializable {
     public void fight(ActionEvent actionEvent) throws Exception{
         if(!myGotchi.isGone()) {
             myGotchi.setMaxHp();
-            System.out.println(myGotchi.isLose());
             game.freezeLivingEngine();
             VBox pane = FXMLLoader.load(getClass().getResource("../view/fightWindow/fight.fxml"));
             gameWindow.getChildren().setAll(pane);

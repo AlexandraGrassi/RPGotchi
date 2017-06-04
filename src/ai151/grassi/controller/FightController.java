@@ -14,13 +14,11 @@ import javafx.scene.layout.HBox;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class FightController implements Initializable {
 
-    private GameEngine game;
     private Battle battle;
     private Gotchi gotchi;
     private Monster monster;
@@ -35,6 +33,8 @@ public class FightController implements Initializable {
     private Label monsterName, monsterStrength, monsterAgility, monsterStamina;
     @FXML
     private ProgressBar gotchiHp, monsterHp;
+    @FXML
+    private Label infoLabel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -51,7 +51,7 @@ public class FightController implements Initializable {
         CustomProgressBar.changeProgressBarColor(monsterHp);
 
         gotchiName.setText(gotchi.getName());
-        monsterName.setText(monster.getMonsterName());
+        monsterName.setText(monster.getName());
 
         gotchiStrength.textProperty().bind(gotchi.getStrengthProperty().asString());
         gotchiAgility.textProperty().bind(gotchi.getAgilityProperty().asString());
@@ -62,6 +62,7 @@ public class FightController implements Initializable {
         monsterStamina.textProperty().bind(monster.getStaminaProperty().asString());
 
         battle = new Battle(gotchi,monster);
+        infoLabel.textProperty().bind(gotchi.fightInfoProperty());
 
         new Thread(() -> {
             while (true) {
@@ -98,7 +99,7 @@ public class FightController implements Initializable {
     private void gotchiWin() {
         Platform.runLater(() -> {
             gotchi.setCountWins(gotchi.getCountWins() + 1);
-            System.out.println(gotchi.getCountWins());
+            System.out.println("Количество побед " + gotchi.getCountWins());
             gotchi.levelUp();
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Важная информация!");
@@ -143,7 +144,7 @@ public class FightController implements Initializable {
     }
 
     public void skipMove(ActionEvent actionEvent) {
-        gotchi.skipMove();
+        gotchi.skipMove(monster);
         battle.beginBattle();
     }
 

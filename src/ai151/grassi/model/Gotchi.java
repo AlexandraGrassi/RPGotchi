@@ -4,12 +4,13 @@ import static ai151.grassi.model.GameConstants.*;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 public class Gotchi extends Fighter {
 
     private SimpleIntegerProperty level;
     private SimpleIntegerProperty exp;
-    private String name;
+    private SimpleStringProperty mainInfo;
     private boolean isGone;
     private boolean isWin;
 
@@ -19,12 +20,8 @@ public class Gotchi extends Fighter {
 
 
     public Gotchi(String name, int stamina, int strength, int agility) {
-        super(stamina, strength, agility);
-
-        this.name = name;
+        super(name, stamina, strength, agility);
         this.level = new SimpleIntegerProperty(MIN_LEVEL);
-       /* this.level = new SimpleIntegerProperty(9);
-        countWins = 12;*/
         this.exp = new SimpleIntegerProperty(MIN);
 
         this.energy = new SimpleDoubleProperty(MAX_VALUE);
@@ -33,6 +30,7 @@ public class Gotchi extends Fighter {
         this.mood = new SimpleDoubleProperty(MAX_VALUE);
         this.clean = new SimpleDoubleProperty(MAX_VALUE);
 
+        this.mainInfo = new SimpleStringProperty("Привет :3");
         this.isGone = false;
     }
 
@@ -52,9 +50,6 @@ public class Gotchi extends Fighter {
         isGone = true;
     }
 
-    public String getName() {
-        return name;
-    }
     public SimpleIntegerProperty getLevelProperty() { return this.level; }
     public SimpleIntegerProperty getExpProperty() { return this.exp; }
 
@@ -144,6 +139,18 @@ public class Gotchi extends Fighter {
         this.exp.set(MIN);
     }
 
+    public String getMainInfo() {
+        return mainInfo.get();
+    }
+
+    public SimpleStringProperty mainInfoProperty() {
+        return mainInfo;
+    }
+
+    public void setMainInfo(String mainInfo) {
+        this.mainInfo.set(mainInfo);
+    }
+
     public void levelUp() {
         setExp();
         if(countWins == 1 || countWins == 2 || countWins == 3 || countWins == 4) {
@@ -152,18 +159,21 @@ public class Gotchi extends Fighter {
             setStamina(getStamina()+10);
             setAgility(getAgility()+10);
             setLevel(getLevel() + 1);
+            setMainInfo("Получен " + getLevel() + " уровень");
         } else if (countWins == 6 || countWins == 8 || countWins == 10 || countWins == 12){
             setMinExp();
             setStrength(getStrength()+5);
             setStamina(getStamina()+5);
             setAgility(getAgility()+5);
             setLevel(getLevel() + 1);
+            setMainInfo("Получен " + getLevel() + " уровень");
         } else if(countWins == 15) {
             setMinExp();
             setStrength(100);
             setStamina(100);
             setAgility(100);
             setLevel(getLevel() + 1);
+            setMainInfo("Получен " + getLevel() + " уровень");
         }
     }
 
@@ -189,8 +199,9 @@ public class Gotchi extends Fighter {
 
     public void becomeSleepy() {
         Platform.runLater(() -> {
+            setMainInfo("");
             if (getEnergy() == MIN_VALUE) {
-                System.out.println("-Я в коме-");
+                setMainInfo("Я в коме");
             }
             setEnergy(getEnergy() - 0.1);
         });
@@ -198,8 +209,10 @@ public class Gotchi extends Fighter {
 
     public void becomeHungry() {
         Platform.runLater(() -> {
-            if (getFood() == MIN_VALUE) {
-                System.out.println("-Я умер-");
+            setMainInfo("");
+            if (getFood() < 0.25) {
+                System.out.println("Я умер");
+                setMainInfo("Я очень голоден");
             }
             setFood(getFood() - 0.05);
         });
@@ -207,11 +220,10 @@ public class Gotchi extends Fighter {
 
     public void becomeSick() {
         Platform.runLater(() -> {
-            if(getHealth() == MIN_VALUE) {
-                System.out.println("-Я умер-");
-            }
+            setMainInfo("");
             if(getClean() < 0.3 || getFood() < 0.3 || getEnergy() < 0.3) {
                 setHealth(getHealth() - 0.05);
+                setMainInfo("Я очень болен");
             } else {
                 setHealth(getHealth());
             }
@@ -220,8 +232,9 @@ public class Gotchi extends Fighter {
 
     public void becomeSad() {
         Platform.runLater(() -> {
-            if (getMood() == MIN_VALUE) {
-                System.out.println("-Я не счастлив-");
+            setMainInfo("");
+            if (getMood() < 0.5) {
+                setMainInfo("Хочу драться!");
             }
             setMood(getMood() - 0.01);
         });
@@ -229,9 +242,7 @@ public class Gotchi extends Fighter {
 
     public void becomeDirty() {
         Platform.runLater(() -> {
-            if (getClean() == MIN_VALUE) {
-                System.out.println("-Я очень болен-");
-            }
+            setMainInfo("");
             setClean(getClean() - 0.05);
         });
     }
