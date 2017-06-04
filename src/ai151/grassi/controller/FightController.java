@@ -25,8 +25,7 @@ public class FightController implements Initializable {
     private Gotchi gotchi;
     private Monster monster;
 
-    final Lock lock = new ReentrantLock();
-    final Condition win  = lock.newCondition();
+    final private Lock lock = new ReentrantLock();
 
     @FXML
     private VBox fightWindow;
@@ -64,25 +63,22 @@ public class FightController implements Initializable {
 
         battle = new Battle(gotchi,monster);
 
-        new Thread() {
-            @Override
-            public void run() {
-                while (true) {
-                    try {
-                        lock.lock();
-                        if(monster.isLose()){
-                            gotchiWin();
-                            break;
-                        } else if(gotchi.isLose()) {
-                            monsterWin();
-                            break;
-                        }
-                    } finally{
-                        lock.unlock();
+        new Thread(() -> {
+            while (true) {
+                try {
+                    lock.lock();
+                    if(monster.isLose()){
+                        gotchiWin();
+                        break;
+                    } else if(gotchi.isLose()) {
+                        monsterWin();
+                        break;
                     }
+                } finally{
+                    lock.unlock();
                 }
             }
-        }.start();
+        }).start();
     }
 
     public void goBackToGame(ActionEvent actionEvent) {
@@ -100,33 +96,28 @@ public class FightController implements Initializable {
     }
 
     private void gotchiWin() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                gotchi.setCountWins(gotchi.getCountWins() + 1);
-                System.out.println(gotchi.getCountWins());
-                gotchi.levelUp();
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Важная информация!");
-                alert.setHeaderText(null);
-                alert.setContentText("Ваш питомец выиграл!!!");
-                alert.showAndWait();
-                goBack();
-            }
+        Platform.runLater(() -> {
+            gotchi.setCountWins(gotchi.getCountWins() + 1);
+            System.out.println(gotchi.getCountWins());
+            gotchi.levelUp();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Важная информация!");
+            alert.setHeaderText(null);
+            alert.setContentText("Ваш питомец выиграл!!!");
+            alert.showAndWait();
+            goBack();
         });
     }
 
     private  void monsterWin() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Важная информация!");
-                alert.setHeaderText(null);
-                alert.setContentText("Вы проиграли бой :с");
-                alert.showAndWait();
-                goBack();
-            }
+        Platform.runLater(() -> {
+            gotchi.setMinExp();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Важная информация!");
+            alert.setHeaderText(null);
+            alert.setContentText("Вы проиграли бой :с");
+            alert.showAndWait();
+            goBack();
         });
     }
 

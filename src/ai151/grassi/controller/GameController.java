@@ -4,8 +4,6 @@ import ai151.grassi.model.GameEngine;
 import ai151.grassi.model.Gotchi;
 import ai151.grassi.model.Monster;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -77,46 +75,40 @@ public class GameController implements Initializable {
         agilityLabel.textProperty().bind(myGotchi.getAgilityProperty().asString());
         strengthLabel.textProperty().bind(myGotchi.getStrengthProperty().asString());
 
-        new Thread() {
-            @Override
-            public void run() {
-                while (myGotchi != null && !myGotchi.isGone() && !myGotchi.isWin()) {
-                    try {
-                        lock.lock();
-                        if(myGotchi.getLevel() == MAX_LEVEL) {
-                            game.freezeLivingEngine();
-                            myGotchi.setWin(true);
-                            notNull.await(1000, TimeUnit.MILLISECONDS);
-                            winGame();
-                        }
-                        if(energyBar.getProgress() == MIN_VALUE || foodBar.getProgress() == MIN_VALUE || healthBar.getProgress() == MIN_VALUE) {
-                            game.freezeLivingEngine();
-                            goAway();
-                        }
+        new Thread(() -> {
+            while (myGotchi != null && !myGotchi.isGone() && !myGotchi.isWin()) {
+                try {
+                    lock.lock();
+                    if(myGotchi.getLevel() == MAX_LEVEL) {
+                        game.freezeLivingEngine();
+                        myGotchi.setWin();
                         notNull.await(1000, TimeUnit.MILLISECONDS);
-                    } catch (InterruptedException e){
-                        e.printStackTrace();
-                    } finally{
-                        lock.unlock();
+                        winGame();
                     }
+                    if(energyBar.getProgress() == MIN_VALUE || foodBar.getProgress() == MIN_VALUE || healthBar.getProgress() == MIN_VALUE) {
+                        game.freezeLivingEngine();
+                        goAway();
+                    }
+                    notNull.await(1000, TimeUnit.MILLISECONDS);
+                } catch (InterruptedException e){
+                    e.printStackTrace();
+                } finally{
+                    lock.unlock();
                 }
             }
-        }.start();
+        }).start();
 
     }
 
     public void goAway() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                myGotchi.setGone(true);
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Важная информация!");
-                alert.setHeaderText(null);
-                alert.setContentText("Ваш питомец ушёл от вас :с");
-                alert.showAndWait();
-                toMenu();
-            }
+        Platform.runLater(() -> {
+            myGotchi.setGone();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Важная информация!");
+            alert.setHeaderText(null);
+            alert.setContentText("Ваш питомец ушёл от вас :с");
+            alert.showAndWait();
+            toMenu();
         });
     }
 
@@ -167,16 +159,13 @@ public class GameController implements Initializable {
     }
 
     private void winGame() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Важная информация!");
-                alert.setHeaderText(null);
-                alert.setContentText("ВЫ ДОСТИГЛИ 10 УРОВНЯ! ПОЗДАВЛЯЕМ :D");
-                alert.showAndWait();
-                toMenu();
-            }
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Важная информация!");
+            alert.setHeaderText(null);
+            alert.setContentText("ВЫ ДОСТИГЛИ 10 УРОВНЯ! ПОЗДАВЛЯЕМ :D");
+            alert.showAndWait();
+            toMenu();
         });
 
     }

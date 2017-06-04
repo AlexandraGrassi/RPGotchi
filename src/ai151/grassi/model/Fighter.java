@@ -103,12 +103,48 @@ public class Fighter {
         return (int) attack;
     }
 
-    private void setAttack(double attack) {
+    public void setAttack(double attack) {
         this.attack = attack;
     }
 
     public void setStamina(int stamina) {
         this.stamina.set(stamina);
+    }
+
+    public SimpleDoubleProperty hpProperty() {
+        return hp;
+    }
+
+    public SimpleIntegerProperty staminaProperty() {
+        return stamina;
+    }
+
+    public SimpleIntegerProperty agilityProperty() {
+        return agility;
+    }
+
+    public SimpleIntegerProperty strengthProperty() {
+        return strength;
+    }
+
+    public void setMaxFighterStamina(int maxFighterStamina) {
+        this.maxFighterStamina = maxFighterStamina;
+    }
+
+    public int getNewStamina() {
+        return newStamina;
+    }
+
+    public void setNewStamina(int newStamina) {
+        this.newStamina = newStamina;
+    }
+
+    public int getChanceToDodge() {
+        return chanceToDodge;
+    }
+
+    public void setChanceToDodge(int chanceToDodge) {
+        this.chanceToDodge = chanceToDodge;
     }
 
     private void attack(double attack, int newStamina, Fighter opponent) {
@@ -130,20 +166,14 @@ public class Fighter {
     }
 
     public void attackLight(Fighter opponent){
-        attack = strength.intValue() / 2;
-        newStamina = getStamina() - getAttackInt() / 2;
         attack(attack, newStamina, opponent);
     }
 
     public void attackMedium(Fighter opponent){
-        attack = strength.intValue() - 10;
-        newStamina = getStamina() - getAttackInt();
         attack(attack, newStamina, opponent);
     }
 
     public void attackHard(Fighter opponent){
-        attack = maxFighterStamina;
-        newStamina = MIN;
         attack(attack, newStamina, opponent);
     }
 
@@ -169,10 +199,7 @@ public class Fighter {
     }
 
     public boolean isLose(){
-        if(getHp() == MIN_VALUE) {
-            return true;
-        }
-        return false;
+        return getHp() == MIN_VALUE;
     }
 
 }

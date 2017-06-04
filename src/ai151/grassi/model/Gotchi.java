@@ -22,9 +22,9 @@ public class Gotchi extends Fighter {
         super(stamina, strength, agility);
 
         this.name = name;
-        //this.level = new SimpleIntegerProperty(MIN_LEVEL);
-        this.level = new SimpleIntegerProperty(9);
-        countWins = 12;
+        this.level = new SimpleIntegerProperty(MIN_LEVEL);
+       /* this.level = new SimpleIntegerProperty(9);
+        countWins = 12;*/
         this.exp = new SimpleIntegerProperty(MIN);
 
         this.energy = new SimpleDoubleProperty(MAX_VALUE);
@@ -40,16 +40,16 @@ public class Gotchi extends Fighter {
         return isWin;
     }
 
-    public void setWin(boolean win) {
-        isWin = win;
+    public void setWin() {
+        isWin = true;
     }
 
     public boolean isGone() {
         return isGone;
     }
 
-    public void setGone(boolean gone) {
-        isGone = gone;
+    public void setGone() {
+        isGone = true;
     }
 
     public String getName() {
@@ -188,67 +188,73 @@ public class Gotchi extends Fighter {
 
 
     public void becomeSleepy() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                if (getEnergy() == MIN_VALUE) {
-                    System.out.println("-Я в коме-");
-                }
-                setEnergy(getEnergy() - 0.1);
+        Platform.runLater(() -> {
+            if (getEnergy() == MIN_VALUE) {
+                System.out.println("-Я в коме-");
             }
+            setEnergy(getEnergy() - 0.1);
         });
     }
 
     public void becomeHungry() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                if (getFood() == MIN_VALUE) {
-                    System.out.println("-Я умер-");
-                }
-                setFood(getFood() - 0.05);
+        Platform.runLater(() -> {
+            if (getFood() == MIN_VALUE) {
+                System.out.println("-Я умер-");
             }
+            setFood(getFood() - 0.05);
         });
     }
 
     public void becomeSick() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                if(getHealth() == MIN_VALUE) {
-                    System.out.println("-Я умер-");
-                }
-                if(getClean() < 0.3 || getFood() < 0.3 || getEnergy() < 0.3) {
-                    setHealth(getHealth() - 0.05);
-                } else {
-                    setHealth(getHealth());
-                }
+        Platform.runLater(() -> {
+            if(getHealth() == MIN_VALUE) {
+                System.out.println("-Я умер-");
+            }
+            if(getClean() < 0.3 || getFood() < 0.3 || getEnergy() < 0.3) {
+                setHealth(getHealth() - 0.05);
+            } else {
+                setHealth(getHealth());
             }
         });
     }
 
     public void becomeSad() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                if (getMood() == MIN_VALUE) {
-                    System.out.println("-Я не счастлив-");
-                }
-                setMood(getMood() - 0.01);
+        Platform.runLater(() -> {
+            if (getMood() == MIN_VALUE) {
+                System.out.println("-Я не счастлив-");
             }
+            setMood(getMood() - 0.01);
         });
     }
 
     public void becomeDirty() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                if (getClean() == MIN_VALUE) {
-                    System.out.println("-Я очень болен-");
-                }
-                setClean(getClean() - 0.05);
+        Platform.runLater(() -> {
+            if (getClean() == MIN_VALUE) {
+                System.out.println("-Я очень болен-");
             }
+            setClean(getClean() - 0.05);
         });
+    }
+
+    @Override
+    public void attackLight(Fighter opponent) {
+        setAttack(getStrength()/2);
+        setNewStamina(getStamina()-getAttackInt() / 2);
+        super.attackLight(opponent);
+    }
+
+    @Override
+    public void attackMedium(Fighter opponent) {
+        setAttack(getStrength()-10);
+        setNewStamina(getStamina()-getAttackInt());
+        super.attackMedium(opponent);
+    }
+
+    @Override
+    public void attackHard(Fighter opponent) {
+        setAttack(getMaxFighterStamina());
+        setNewStamina(getStamina()-getAttackInt());
+        super.attackHard(opponent);
     }
 
 }
