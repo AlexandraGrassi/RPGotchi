@@ -33,7 +33,7 @@ public class GameController implements Initializable {
     @FXML
     private Label staminaLabel, agilityLabel, strengthLabel;
 
-    private Gotchi myGotchi;
+    private static Gotchi myGotchi;
     private static GameEngine game;
     //private Battle battle;
 
@@ -42,7 +42,7 @@ public class GameController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        myGotchi = new Gotchi("Meow",40,35, 30);;
+        myGotchi = MenuController.getMyGotchi();
 
         nameLabel.setText(myGotchi.getName());
 
@@ -114,9 +114,10 @@ public class GameController implements Initializable {
         });
     }
 
-    public Gotchi getMyGotchi() {
+    public static Gotchi getMyGotchi() {
         return myGotchi;
     }
+
     public static Monster getCurMonster() {
         return game.getMonster();
     }
