@@ -39,7 +39,7 @@ public class FightController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        gotchi = GameController.getMyGotchi();
+        gotchi = GameEngine.getMyGotchi();
         monster = GameController.getCurMonster();
 
         gotchiHp.progressProperty().bind(gotchi.getHpProperty());

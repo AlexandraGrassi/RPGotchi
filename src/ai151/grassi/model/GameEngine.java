@@ -2,7 +2,7 @@ package ai151.grassi.model;
 import static ai151.grassi.model.GameConstants.*;
 
 public class GameEngine {
-    private Gotchi myGotchi;
+    private static Gotchi myGotchi;
     private Monster monster;
     private Battle battle;
     private LivingEngine livingEngine;
@@ -11,6 +11,10 @@ public class GameEngine {
         myGotchi = gotchi;
         livingEngine = new LivingEngine();
         livingEngine.addGotchi(myGotchi);
+    }
+
+    public static Gotchi getMyGotchi() {
+        return myGotchi;
     }
 
     public void freezeLivingEngine() {
