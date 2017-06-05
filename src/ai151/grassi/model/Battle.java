@@ -14,8 +14,6 @@ public class Battle {
     }
 
     public void beginBattle() {
-        gotchi.setFightInfo("");
-        gotchi.setMoveDone();
         System.out.println("-----");
         Random random = new Random();
         attack = 1 + random.nextInt(3);

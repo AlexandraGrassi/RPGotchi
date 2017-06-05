@@ -145,7 +145,7 @@ public class Fighter {
                 setMoveDone();
             } else {
                 setStamina(newStamina);
-                dodge(opponent);
+                opponent.dodge(this);
                 opponent.setHp(opponent.getHp() - getAttack()/100);
                 moveDone = true;
                 setAttack(0);
@@ -156,16 +156,19 @@ public class Fighter {
     }
 
     public void attackLight(Fighter opponent){
+        this.setFightInfo("");
         isSkipMove = false;
         attack(attack, newStamina, opponent);
     }
 
     public void attackMedium(Fighter opponent){
+        this.setFightInfo("");
         isSkipMove = false;
         attack(attack, newStamina, opponent);
     }
 
     public void attackHard(Fighter opponent) {
+        this.setFightInfo("");
         isSkipMove = false;
         attack(attack, newStamina, opponent);
     }
@@ -175,7 +178,7 @@ public class Fighter {
         Random random = new Random();
         chanceToDodge = random.nextInt(1001);
         if(chanceToDodge < getAgility()*10) {
-            this.setAttack(MIN);
+            opponent.setAttack(MIN);
             System.out.println(this.getName() + " увернулся");
             if(!opponent.isSkipMove) {
                 opponent.setFightInfo(this.getName() + " увернулся");
@@ -184,6 +187,7 @@ public class Fighter {
     }
 
     public void skipMove(Fighter opponent){
+        this.setFightInfo("");
         setAttack(MIN);
         if((getStamina() + maxFighterStamina/2) <= maxFighterStamina) {
             setStamina(getStamina() + maxFighterStamina/2);
