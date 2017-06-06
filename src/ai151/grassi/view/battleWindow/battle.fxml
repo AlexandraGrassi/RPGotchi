@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="fightWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="color" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ai151.grassi.controller.FightController">
+<VBox fx:id="fightWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="color" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ai151.grassi.controller.BattleController">
    <children>
       <HBox alignment="CENTER">
          <children>
@@ -204,7 +204,7 @@
    </children>
    <stylesheets>
       <URL value="@../main.css" />
-      <URL value="@fight.css" />
+      <URL value="@battle.css" />
       <URL value="@../progress-bar.css" />
    </stylesheets>
 </VBox>

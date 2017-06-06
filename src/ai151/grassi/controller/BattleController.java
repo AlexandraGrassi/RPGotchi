@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class FightController implements Initializable {
+public class BattleController implements Initializable {
 
     private Battle battle;
     private Gotchi gotchi;

@@ -177,7 +177,7 @@ public class GameController implements Initializable {
         if(!myGotchi.isGone()) {
             myGotchi.setMaxHp();
             game.freezeLivingEngine();
-            VBox pane = FXMLLoader.load(getClass().getResource("../view/fightWindow/fight.fxml"));
+            VBox pane = FXMLLoader.load(getClass().getResource("../view/battleWindow/battle.fxml"));
             gameWindow.getChildren().setAll(pane);
         } else {
             goAway();
